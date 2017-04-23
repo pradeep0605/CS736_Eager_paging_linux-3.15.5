@@ -57,6 +57,7 @@
 #include <scsi/scsi_tcq.h>
 #include "megaraid_sas_fusion.h"
 #include "megaraid_sas.h"
+#include "megaraid_sas_internal.h"
 
 /*
  * Number of sectors per IO command
@@ -94,7 +95,6 @@ MODULE_VERSION(MEGASAS_VERSION);
 MODULE_AUTHOR("megaraidlinux@lsi.com");
 MODULE_DESCRIPTION("LSI MegaRAID SAS Driver");
 
-int megasas_transition_to_ready(struct megasas_instance *instance, int ocr);
 static int megasas_get_pd_list(struct megasas_instance *instance);
 static int megasas_ld_list_query(struct megasas_instance *instance,
 				 u8 query_type);
@@ -151,9 +151,6 @@ static u32 support_device_change;
 /* define lock for aen poll */
 spinlock_t poll_aen_lock;
 
-void
-megasas_complete_cmd(struct megasas_instance *instance, struct megasas_cmd *cmd,
-		     u8 alt_status);
 static u32
 megasas_read_fw_status_reg_gen2(struct megasas_register_set __iomem *regs);
 static int
@@ -166,26 +163,8 @@ u32
 megasas_build_and_issue_cmd(struct megasas_instance *instance,
 			    struct scsi_cmnd *scmd);
 static void megasas_complete_cmd_dpc(unsigned long instance_addr);
-void
-megasas_release_fusion(struct megasas_instance *instance);
-int
-megasas_ioc_init_fusion(struct megasas_instance *instance);
-void
-megasas_free_cmds_fusion(struct megasas_instance *instance);
-u8
-megasas_get_map_info(struct megasas_instance *instance);
-int
-megasas_sync_map_info(struct megasas_instance *instance);
-int
-wait_and_poll(struct megasas_instance *instance, struct megasas_cmd *cmd,
-	int seconds);
-void megasas_reset_reply_desc(struct megasas_instance *instance);
-int megasas_reset_fusion(struct Scsi_Host *shost, int iotimeout);
-void megasas_fusion_ocr_wq(struct work_struct *work);
 static int megasas_get_ld_vf_affiliation(struct megasas_instance *instance,
 					 int initial);
-int megasas_check_mpio_paths(struct megasas_instance *instance,
-			     struct scsi_cmnd *scmd);
 
 void
 megasas_issue_dcmd(struct megasas_instance *instance, struct megasas_cmd *cmd)
@@ -225,6 +204,7 @@ struct megasas_cmd *megasas_get_cmd(struct megasas_instance
  * @instance:		Adapter soft state
  * @cmd:		Command packet to be returned to free command pool
  */
+#if 0
 inline void
 megasas_return_cmd(struct megasas_instance *instance, struct megasas_cmd *cmd)
 {
@@ -244,7 +224,7 @@ megasas_return_cmd(struct megasas_instance *instance, struct megasas_cmd *cmd)
 
 	spin_unlock_irqrestore(&instance->cmd_pool_lock, flags);
 }
-
+#endif
 
 /**
 *	The following functions are defined for xscale
@@ -1387,32 +1367,6 @@ megasas_build_ldio(struct megasas_instance *instance, struct scsi_cmnd *scp,
 			ldio->sge_count, IO_FRAME);
 
 	return cmd->frame_count;
-}
-
-/**
- * megasas_is_ldio -		Checks if the cmd is for logical drive
- * @scmd:			SCSI command
- *
- * Called by megasas_queue_command to find out if the command to be queued
- * is a logical drive command
- */
-inline int megasas_is_ldio(struct scsi_cmnd *cmd)
-{
-	if (!MEGASAS_IS_LOGICAL(cmd))
-		return 0;
-	switch (cmd->cmnd[0]) {
-	case READ_10:
-	case WRITE_10:
-	case READ_12:
-	case WRITE_12:
-	case READ_6:
-	case WRITE_6:
-	case READ_16:
-	case WRITE_16:
-		return 1;
-	default:
-		return 0;
-	}
 }
 
  /**

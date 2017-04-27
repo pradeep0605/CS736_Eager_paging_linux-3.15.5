@@ -2214,7 +2214,7 @@ long __get_user_pages(struct task_struct *tsk, struct mm_struct *mm,
                         }
                     }
                 }
-		printk("Order for %lx: %d\n", start, apriori_order);
+				printk("Order for %lx: %d\n", start, apriori_order);
             }
 
 			/*

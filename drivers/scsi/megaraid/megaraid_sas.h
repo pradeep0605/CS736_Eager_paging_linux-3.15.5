@@ -1640,7 +1640,6 @@ struct megasas_instance {
 	int throttlequeuedepth;
 	u8 mask_interrupts;
 	u8 is_imr;
-	spinlock_t mfi_pool_lock;
 };
 struct MR_LD_VF_MAP {
 	u32 size;

@@ -1831,15 +1831,6 @@ void rtsx_disable_aspm(struct rtsx_chip *chip)
 	return;
 }
 
-inline u8 *rtsx_get_cmd_data(struct rtsx_chip *chip)
-{
-#ifdef CMD_USING_SG
-	return (u8 *)(chip->host_sg_tbl_ptr);
-#else
-	return (u8 *)(chip->host_cmds_ptr);
-#endif
-}
-
 int rtsx_read_ppbuf(struct rtsx_chip *chip, u8 *buf, int buf_len)
 {
 	int retval;

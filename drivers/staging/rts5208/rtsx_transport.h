@@ -46,7 +46,6 @@ void rtsx_add_cmd(struct rtsx_chip *chip,
 void rtsx_send_cmd_no_wait(struct rtsx_chip *chip);
 int rtsx_send_cmd(struct rtsx_chip *chip, u8 card, int timeout);
 
-#if 0
 extern inline u8 *rtsx_get_cmd_data(struct rtsx_chip *chip)
 {
 #ifdef CMD_USING_SG
@@ -55,7 +54,6 @@ extern inline u8 *rtsx_get_cmd_data(struct rtsx_chip *chip)
 	return (u8 *)(chip->host_cmds_ptr);
 #endif
 }
-#endif
 
 int rtsx_transfer_data(struct rtsx_chip *chip, u8 card, void *buf, size_t len,
 		int use_sg, enum dma_data_direction dma_dir, int timeout);

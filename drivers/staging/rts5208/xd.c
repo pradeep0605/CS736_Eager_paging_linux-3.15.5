@@ -82,15 +82,6 @@ static int xd_switch_clock(struct rtsx_chip *chip)
 	return STATUS_SUCCESS;
 }
 
-static inline u8 *rtsx_get_cmd_data(struct rtsx_chip *chip)
-{
-#ifdef CMD_USING_SG
-	return (u8 *)(chip->host_sg_tbl_ptr);
-#else
-	return (u8 *)(chip->host_cmds_ptr);
-#endif
-}
-
 static int xd_read_id(struct rtsx_chip *chip, u8 id_cmd, u8 *id_buf, u8 buf_len)
 {
 	int retval, i;

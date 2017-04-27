@@ -1798,15 +1798,6 @@ static int set_chip_mode(struct scsi_cmnd *srb, struct rtsx_chip *chip)
 	return TRANSPORT_GOOD;
 }
 
-static inline u8 *rtsx_get_cmd_data(struct rtsx_chip *chip)
-{
-#ifdef CMD_USING_SG
-	return (u8 *)(chip->host_sg_tbl_ptr);
-#else
-	return (u8 *)(chip->host_cmds_ptr);
-#endif
-}
-
 static int rw_mem_cmd_buf(struct scsi_cmnd *srb, struct rtsx_chip *chip)
 {
 	int retval =  STATUS_SUCCESS;

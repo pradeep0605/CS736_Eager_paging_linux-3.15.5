@@ -7,10 +7,6 @@
 #include <linux/kernel.h>
 
 
-char badger_trap_process[CONFIG_NR_CPUS][MAX_NAME_LEN];
-unsigned long base[256*1024];
-unsigned long limit[256*1024];
-unsigned long offset[256*1024];
 /*
  * This syscall is generic way of setting up badger trap. 
  * There are three options to start badger trap.

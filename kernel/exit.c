@@ -58,9 +58,8 @@
 #include <asm/unistd.h>
 #include <asm/pgtable.h>
 #include <asm/mmu_context.h>
-#include <linux/badger_trap.h>
 
-//extern inline void print_rmt(void);
+extern inline void print_rmt(void);
 
 static void exit_mm(struct task_struct * tsk);
 
@@ -869,7 +868,7 @@ void do_exit(long code)
                         printk("DTLB 128 VTLB buffer hit detected %lu\n",current->mm->total_vtlb_buffer_hits[3]);
                         printk("===================================\n");
                         spin_unlock(&result_mutex);
-						print_rmt();
+			print_rmt();
                 }
         }
 	if (group_dead)

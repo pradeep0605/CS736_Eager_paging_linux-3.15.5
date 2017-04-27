@@ -734,7 +734,6 @@ enum ieee80211_state {
 #define IEEE_G            (1<<2)
 #define IEEE_MODE_MASK    (IEEE_A|IEEE_B|IEEE_G)
 
-#if 0
 extern inline int ieee80211_is_empty_essid(const char *essid, int essid_len)
 {
 	/* Single white space is for Linksys APs */
@@ -774,7 +773,6 @@ extern inline int ieee80211_get_hdrlen(u16 fc)
 	}
 	return hdrlen;
 }
-#endif
 
 struct registry_priv;
 

@@ -120,16 +120,6 @@ static int sd_check_data0_status(struct rtsx_chip *chip)
 	return STATUS_SUCCESS;
 }
 
-
-static inline u8 *rtsx_get_cmd_data(struct rtsx_chip *chip)
-{
-#ifdef CMD_USING_SG
-	return (u8 *)(chip->host_sg_tbl_ptr);
-#else
-	return (u8 *)(chip->host_cmds_ptr);
-#endif
-}
-
 static int sd_send_cmd_get_rsp(struct rtsx_chip *chip, u8 cmd_idx,
 		u32 arg, u8 rsp_type, u8 *rsp, int rsp_len)
 {

@@ -1537,7 +1537,7 @@ qla8044_set_rst_ready(struct scsi_qla_host *vha)
  *
  * Note: IDC lock must be held upon entry
  **/
-void
+static void
 qla8044_need_reset_handler(struct scsi_qla_host *vha)
 {
 	uint32_t dev_state = 0, drv_state, drv_active;

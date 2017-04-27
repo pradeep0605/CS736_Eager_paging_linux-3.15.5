@@ -50,15 +50,6 @@ static int ms_parse_err_code(struct rtsx_chip *chip)
 	TRACE_RET(chip, STATUS_FAIL);
 }
 
-static inline u8 *rtsx_get_cmd_data(struct rtsx_chip *chip)
-{
-#ifdef CMD_USING_SG
-	return (u8 *)(chip->host_sg_tbl_ptr);
-#else
-	return (u8 *)(chip->host_cmds_ptr);
-#endif
-}
-
 static int ms_transfer_tpc(struct rtsx_chip *chip, u8 trans_mode,
 			u8 tpc, u8 cnt, u8 cfg)
 {

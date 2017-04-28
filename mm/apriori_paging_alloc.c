@@ -76,9 +76,15 @@ inline void incr_mremap_count(ep_stats_t *application) {
 int indexof_apriori_paged_process(const char* proc_name);
 
 asmlinkage long sys_ep_control_syscall(int val) {
+	/* For testing User->Kernel->User space context switch times */
+	if (val == 64) {
+		return 0xceed;
+	}
 
+	/*
 	pr_err("\n======================Inside system calls (%s)"
 		"============================", __func__);
+	*/
 
 	switch (val) {
 		case 1:

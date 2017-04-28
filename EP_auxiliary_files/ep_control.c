@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #if 0
 
@@ -27,8 +28,36 @@
 #define __NR_apriori_paging_alloc 318
 #define ADD_STATS 318
 
+#define N_SYSCALLS (1000 * 1000)
+#define BILLION (1000000000)
+
+inline unsigned long get_current_time(void) {   
+	unsigned long int time = 0;                 
+	struct timespec tv;                         
+
+	clock_gettime(CLOCK_MONOTONIC, &tv);                        
+
+	time = ((tv.tv_sec * BILLION) + tv.tv_nsec);
+	return time;                                
+}
+
+
 enum ep_register_type {FOR_EAGER_PAGING = 0,   
                        FOR_STATISTICS = 1}; 
+
+void measure_syscall_overhead() {
+	int i = 0;
+	unsigned long sum = 0, start = 0, end = 0;
+
+	for(i = 0; i < N_SYSCALLS; ++i) {
+		start = get_current_time();
+		syscall(CONTROL_EP, 64);
+		end = get_current_time();
+		sum +=  (end - start);
+	}
+	printf("Average User->Kernel->User Context switch time = %lf ns\n",
+		(double)(sum) / N_SYSCALLS);
+}
 
 int main(int argc, char **argv) {
 
@@ -41,6 +70,7 @@ int main(int argc, char **argv) {
 		printf("--ctrl #number options: \n1) enabled stack dump (-1) for disabling ]\n");
 		printf("2) enabled prints (-2) for disabling ]\n");
 		printf("3) enabled stats (-3) disabling stats ]\n");
+		printf("64) Empty Syscall for time calculation]\n");
 		return 0;
 	}
 	
@@ -68,8 +98,12 @@ int main(int argc, char **argv) {
 	} else if (strcmp(argv[1], "--ctrl") == 0) {
 		if (argc == 3) {
 			int cmd = atoi(argv[2]);
-			printf("Calling sys_ep_control_syscall syscall. Returned %x\n",
-				(unsigned int) syscall(CONTROL_EP, cmd));
+			if (cmd == 64) {
+				measure_syscall_overhead();
+			} else {
+				printf("Calling sys_ep_control_syscall syscall. Returned %x\n",
+					(unsigned int) syscall(CONTROL_EP, cmd));
+			}
 
 		} else {
 			printf("Invalid number of arguments for %s\n", argv[1]);

@@ -1,0 +1,11 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =9
+let g:netrw_dirhist_1='/projects/hnd_software_ext4/work/pkashyap/workspace/DINGO_TWIG_9_10_101/build/dongle'
+let g:netrw_dirhist_2='/projects/hnd_software_ext4/work/pkashyap/workspace/DINGO_TWIG_9_10_101/build'
+let g:netrw_dirhist_3='/projects/hnd_software_ext4/work/pkashyap/workspace/DINGO_TWIG_9_10_101'
+let g:netrw_dirhist_4='/projects/hnd_software_ext4/work/pkashyap/workspace'
+let g:netrw_dirhist_5='/projects/hnd_software_ext4/work/pkashyap/workspace/DINGO_TWIG_9_10_101/build/dongle/4359b0-roml/threadx-pcie-ag-msgbuf-p2p-mchan-splitrx-ampduhostreorder-proptxstatus-die3-rsdbsw-sstput'
+let g:netrw_dirhist_6='/projects/hnd_software_ext4/work/pkashyap/workspace/DINGO_TWIG_9_10_101/build/dongle/4359b0-roml'
+let g:netrw_dirhist_7='/projects/hnd_software_ext4/work/pkashyap/workspace/DINGO_TWIG_9_10_101/build/dongle'
+let g:netrw_dirhist_8='/projects/hnd_software_ext4/work/pkashyap/workspace/DINGO07T_BRANCH_9_35/src/wl/sys'
+let g:netrw_dirhist_9='/projects/hnd_software_ext4/work/pkashyap/workspace/DINGO07T_BRANCH_9_35/src/wl/config'

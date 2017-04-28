@@ -328,9 +328,9 @@
 319     64      init_badger_trap        sys_init_badger_trap
 #320  	common  apriori_paging_mfile_enable   sys_apriori_paging_mfile_enable
 
-321	common	list_ep_apps sys_list_ep_apps
-322	common	clear_ep_apps_list sys_clear_ep_apps_list
-323	common ep_control_syscall	sys_ep_control_syscall
+320	common	list_ep_apps sys_list_ep_apps
+321	common	clear_ep_apps_list sys_clear_ep_apps_list
+322	common ep_control_syscall	sys_ep_control_syscall
 
 #
 # x32-specific system call numbers start at 512 to avoid cache impact

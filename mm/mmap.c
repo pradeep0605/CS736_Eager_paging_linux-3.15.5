@@ -1440,6 +1440,10 @@ SYSCALL_DEFINE6(mmap_pgoff, unsigned long, addr, unsigned long, len,
 {
 	struct file *file = NULL;
 	unsigned long retval = -EBADF;
+	ep_stats_t *stats = NULL;
+
+	stats = indexof_process_stats(current->comm);
+	record_start_event(stats, EP_MMAP_EVENT);
 
 	if (!(flags & MAP_ANONYMOUS)) {
 		audit_mmap_fd(fd, flags);
@@ -1456,8 +1460,10 @@ SYSCALL_DEFINE6(mmap_pgoff, unsigned long, addr, unsigned long, len,
 		struct hstate *hs;
 
 		hs = hstate_sizelog((flags >> MAP_HUGE_SHIFT) & SHM_HUGE_MASK);
-		if (!hs)
+		if (!hs) {
+			record_end_event(stats, EP_MMAP_EVENT);
 			return -EINVAL;
+		}
 
 		len = ALIGN(len, huge_page_size(hs));
 		/*
@@ -1470,8 +1476,10 @@ SYSCALL_DEFINE6(mmap_pgoff, unsigned long, addr, unsigned long, len,
 				VM_NORESERVE,
 				&user, HUGETLB_ANONHUGE_INODE,
 				(flags >> MAP_HUGE_SHIFT) & MAP_HUGE_MASK);
-		if (IS_ERR(file))
+		if (IS_ERR(file)) {
+			record_end_event(stats, EP_MMAP_EVENT);
 			return PTR_ERR(file);
+		}
 	}
 
 	flags &= ~(MAP_EXECUTABLE | MAP_DENYWRITE);
@@ -1481,6 +1489,7 @@ out_fput:
 	if (file)
 		fput(file);
 out:
+	record_end_event(stats, EP_MMAP_EVENT);
 	return retval;
 }
 

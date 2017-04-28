@@ -1048,8 +1048,7 @@ __do_page_fault(struct pt_regs *regs, unsigned long error_code,
 	/* Team Root: Eager Paging Related statistics */
 	ep_stats_t *stats = NULL;                    
 	stats = indexof_process_stats(current->comm);
-	incr_pgfault_count(stats);
-	record_start_event(stats);
+	record_start_event(stats, EP_PGFAULT_EVENT);
 
 	ep_dump_stack();
 
@@ -1065,7 +1064,7 @@ __do_page_fault(struct pt_regs *regs, unsigned long error_code,
 	prefetchw(&mm->mmap_sem);
 
 	if (unlikely(kmmio_fault(regs, address))) {
-		record_end_event(stats);
+		record_end_event(stats, EP_PGFAULT_EVENT);
 		return;
 	}
 
@@ -1085,25 +1084,25 @@ __do_page_fault(struct pt_regs *regs, unsigned long error_code,
 	if (unlikely(fault_in_kernel_space(address))) {
 		if (!(error_code & (PF_RSVD | PF_USER | PF_PROT))) {
 			if (vmalloc_fault(address) >= 0) {
-				record_end_event(stats);
+				record_end_event(stats, EP_PGFAULT_EVENT);
 				return;
 			}
 
 			if (kmemcheck_fault(regs, address, error_code)) {
-				record_end_event(stats);
+				record_end_event(stats, EP_PGFAULT_EVENT);
 				return;
 			}
 		}
 
 		/* Can handle a stale RO->RW TLB: */
 		if (spurious_fault(error_code, address)) {
-			record_end_event(stats);
+			record_end_event(stats, EP_PGFAULT_EVENT);
 			return;
 		}
 
 		/* kprobes don't want to hook the spurious faults: */
 		if (kprobes_fault(regs)) {
-			record_end_event(stats);
+			record_end_event(stats, EP_PGFAULT_EVENT);
 			return;
 		}
 		/*
@@ -1111,14 +1110,14 @@ __do_page_fault(struct pt_regs *regs, unsigned long error_code,
 		 * fault we could otherwise deadlock:
 		 */
 		bad_area_nosemaphore(regs, error_code, address);
-		record_end_event(stats);
+		record_end_event(stats, EP_PGFAULT_EVENT);
 		
 		return;
 	}
 
 	/* kprobes don't want to hook the spurious faults: */
 	if (unlikely(kprobes_fault(regs))) {
-		record_end_event(stats);
+		record_end_event(stats, EP_PGFAULT_EVENT);
 		return;
 	}
 
@@ -1127,7 +1126,7 @@ __do_page_fault(struct pt_regs *regs, unsigned long error_code,
 
 	if (unlikely(smap_violation(error_code, regs))) {
 		bad_area_nosemaphore(regs, error_code, address);
-		record_end_event(stats);
+		record_end_event(stats, EP_PGFAULT_EVENT);
 		return;
 	}
 
@@ -1137,7 +1136,7 @@ __do_page_fault(struct pt_regs *regs, unsigned long error_code,
 	 */
 	if (unlikely(in_atomic() || !mm)) {
 		bad_area_nosemaphore(regs, error_code, address);
-		record_end_event(stats);
+		record_end_event(stats, EP_PGFAULT_EVENT);
 		return;
 	}
 
@@ -1182,7 +1181,7 @@ __do_page_fault(struct pt_regs *regs, unsigned long error_code,
 		if ((error_code & PF_USER) == 0 &&
 		    !search_exception_tables(regs->ip)) {
 			bad_area_nosemaphore(regs, error_code, address);
-			record_end_event(stats);
+			record_end_event(stats, EP_PGFAULT_EVENT);
 			return;
 		}
 retry:
@@ -1199,14 +1198,14 @@ retry:
 	vma = find_vma(mm, address);
 	if (unlikely(!vma)) {
 		bad_area(regs, error_code, address);
-		record_end_event(stats);
+		record_end_event(stats, EP_PGFAULT_EVENT);
 		return;
 	}
 	if (likely(vma->vm_start <= address))
 		goto good_area;
 	if (unlikely(!(vma->vm_flags & VM_GROWSDOWN))) {
 		bad_area(regs, error_code, address);
-		record_end_event(stats);
+		record_end_event(stats, EP_PGFAULT_EVENT);
 		return;
 	}
 	if (error_code & PF_USER) {
@@ -1218,13 +1217,13 @@ retry:
 		 */
 		if (unlikely(address + 65536 + 32 * sizeof(unsigned long) < regs->sp)) {
 			bad_area(regs, error_code, address);
-			record_end_event(stats);
+			record_end_event(stats, EP_PGFAULT_EVENT);
 			return;
 		}
 	}
 	if (unlikely(expand_stack(vma, address))) {
 		bad_area(regs, error_code, address);
-		record_end_event(stats);
+		record_end_event(stats, EP_PGFAULT_EVENT);
 		return;
 	}
 
@@ -1235,7 +1234,7 @@ retry:
 good_area:
 	if (unlikely(access_error(error_code, vma))) {
 		bad_area_access_error(regs, error_code, address);
-		record_end_event(stats);
+		record_end_event(stats, EP_PGFAULT_EVENT);
 		return;
 	}
 
@@ -1261,13 +1260,13 @@ good_area:
 	 * would already be released in __lock_page_or_retry in mm/filemap.c.
 	 */
 	if (unlikely((fault & VM_FAULT_RETRY) && fatal_signal_pending(current))) {
-		record_end_event(stats);
+		record_end_event(stats, EP_PGFAULT_EVENT);
 		return;
 	}
 
 	if (unlikely(fault & VM_FAULT_ERROR)) {
 		mm_fault_error(regs, error_code, address, fault);
-		record_end_event(stats);
+		record_end_event(stats, EP_PGFAULT_EVENT);
 		return;
 	}
 
@@ -1298,7 +1297,7 @@ good_area:
 	check_v8086_mode(regs, address, tsk);
 
 	up_read(&mm->mmap_sem);
-	record_end_event(stats);
+	record_end_event(stats, EP_PGFAULT_EVENT);
 }
 
 dotraplinkage void __kprobes notrace

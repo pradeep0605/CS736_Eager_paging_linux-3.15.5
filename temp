@@ -1,0 +1,23 @@
+fs/exec.c: In function ‘setup_new_exec’:
+fs/exec.c:1135:4: error: too few arguments to function ‘ep_register_process’
+include/linux/apriori_paging_alloc.h:55:5: note: declared here
+mm/apriori_paging_alloc.c:40:13: error: conflicting types for ‘record_start_event’
+include/linux/apriori_paging_alloc.h:51:13: note: previous declaration of ‘record_start_event’ was here
+mm/apriori_paging_alloc.c: In function ‘record_start_event’:
+mm/apriori_paging_alloc.c:46:15: error: ‘ep_stats_t’ has no member named ‘cunters’
+make[1]: *** [fs/exec.o] Error 1
+mm/apriori_paging_alloc.c: In function ‘sys_clear_ep_apps_list’:
+mm/apriori_paging_alloc.c:187:36: error: ‘ep_stats_t’ has no member named ‘name’
+mm/apriori_paging_alloc.c:191:30: error: ‘ep_stats_t’ has no member named ‘name’
+mm/apriori_paging_alloc.c:198:22: error: ‘ep_stats_t’ has no member named ‘name’
+mm/apriori_paging_alloc.c:202:16: error: ‘ep_stats_t’ has no member named ‘name’
+mm/apriori_paging_alloc.c: In function ‘ep_register_process’:
+mm/apriori_paging_alloc.c:228:19: warning: unused variable ‘pid’ [-Wunused-variable]
+mm/apriori_paging_alloc.c:227:25: warning: unused variable ‘tsk’ [-Wunused-variable]
+mm/apriori_paging_alloc.c: In function ‘SYSC_apriori_paging_alloc’:
+mm/apriori_paging_alloc.c:281:3: error: too few arguments to function ‘strncpy_from_user’
+/home/pradeep/CS736_eager_paging_linux-3.15.5/arch/x86/include/asm/uaccess.h:528:1: note: declared here
+make: *** [fs] Error 2
+make: *** Waiting for unfinished jobs....
+make[1]: *** [mm/apriori_paging_alloc.o] Error 1
+make: *** [mm] Error 2

@@ -1,5 +1,4 @@
 #include<stdio.h>
-
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
@@ -8,8 +7,8 @@
 int main()
 {
 #if 1
-	int n = 10000;
-	int k = 5;
+	int n = 10;
+	int k = 4;
 	int * ptr = NULL;
 	/*
 	int *ptr = mmap(NULL, n, PROT_READ | PROT_WRITE, MAP_PRIVATE |
@@ -17,6 +16,7 @@ int main()
 	*/
 	
 	while (k--) {
+		printf("Allocating %lf MB\n", (double)(n) / 1024 / 1024);
 		write(1, "After this\n", strlen("After this\n"));
 		// scanf("%d", &n);
 		n = n * 1024 * 4;

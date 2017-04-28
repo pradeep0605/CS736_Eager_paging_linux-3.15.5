@@ -21,6 +21,7 @@
 #include <linux/syscalls.h>
 #include <linux/mmu_notifier.h>
 #include <linux/sched/sysctl.h>
+#include <linux/apriori_paging_alloc.h>
 
 #include <asm/uaccess.h>
 #include <asm/cacheflush.h>
@@ -482,15 +483,25 @@ SYSCALL_DEFINE5(mremap, unsigned long, addr, unsigned long, old_len,
 	unsigned long charged = 0;
 	bool locked = false;
 	unsigned long apriori_flag = 0;
+	ep_stats_t *stats = NULL;                    
 
-	if (flags & ~(MREMAP_FIXED | MREMAP_MAYMOVE))
-		return ret;
+	stats = indexof_process_stats(current->comm);
+	record_start_event(stats, EP_MREMAP_EVENT);
 
-	if (flags & MREMAP_FIXED && !(flags & MREMAP_MAYMOVE))
+	if (flags & ~(MREMAP_FIXED | MREMAP_MAYMOVE)) {
+		record_end_event(stats, EP_MREMAP_EVENT);
 		return ret;
+	}
 
-	if (addr & ~PAGE_MASK)
+	if (flags & MREMAP_FIXED && !(flags & MREMAP_MAYMOVE)) {
+		record_end_event(stats, EP_MREMAP_EVENT);
 		return ret;
+	}
+
+	if (addr & ~PAGE_MASK) {
+		record_end_event(stats, EP_MREMAP_EVENT);
+		return ret;
+	}
 
 	old_len = PAGE_ALIGN(old_len);
 	new_len = PAGE_ALIGN(new_len);
@@ -500,8 +511,10 @@ SYSCALL_DEFINE5(mremap, unsigned long, addr, unsigned long, old_len,
 	 * for DOS-emu "duplicate shm area" thing. But
 	 * a zero new-len is nonsensical.
 	 */
-	if (!new_len)
+	if (!new_len) {
+		record_end_event(stats, EP_MREMAP_EVENT);
 		return ret;
+	}
 
 	down_write(&current->mm->mmap_sem);
 
@@ -605,5 +618,7 @@ out:
 	up_write(&current->mm->mmap_sem);
 	if (locked && new_len > old_len)
 		mm_populate(new_addr + old_len, new_len - old_len, apriori_flag);
+	
+	record_end_event(stats, EP_MREMAP_EVENT);
 	return ret;
 }

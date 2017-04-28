@@ -326,7 +326,7 @@
 317     64      order_count        	sys_order_count
 318     64      apriori_paging_alloc    sys_apriori_paging_alloc
 319     64      init_badger_trap        sys_init_badger_trap
-320  	common  apriori_paging_mfile_enable   sys_apriori_paging_mfile_enable
+#320  	common  apriori_paging_mfile_enable   sys_apriori_paging_mfile_enable
 
 321	common	list_ep_apps sys_list_ep_apps
 322	common	clear_ep_apps_list sys_clear_ep_apps_list

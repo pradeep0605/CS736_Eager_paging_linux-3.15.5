@@ -32,13 +32,15 @@ typedef struct eager_paging_statistics {
 	char name[MAX_PROC_NAME_LEN]; /* Name of the process */
 	unsigned long start_time;  /* Amount of time spent in kernel for allocation */
 	unsigned long end_time;  /* Amount of time spent in kernel for allocation */
-	unsigned long kernel_time;  /* Amount of time spent in kernel for allocation */
-
+	unsigned long allocation_time; /* Amount of time spent for allocation */
+	unsigned long kernel_time;  /* Total Amount of time spent in kernel
+								for allocation and handling page faults */
 	unsigned long kernel_entry; /* Number of time we entered kernel for allocation 
 					kernel_entry = mmap_entry_count + pagefault_entry_count */
 	
 	/* Coutners for all the events */
 	unsigned long counters[EP_MAX_EVENT];
+	unsigned long timers[EP_MAX_EVENT];
 
 } ep_stats_t;
 

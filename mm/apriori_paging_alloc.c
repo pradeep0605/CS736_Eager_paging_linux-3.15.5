@@ -52,6 +52,10 @@ inline void record_end_event(ep_stats_t *application, ep_event_t event) {
 	if (application != NULL) {
 		application->end_time = get_current_time();
 		application->kernel_time += (application->end_time - application->start_time);
+		if (event < EP_MAX_EVENT) {
+			application->timers[event] +=
+				(application->end_time - application->start_time); 
+		}	
 	}
 }
 
@@ -133,14 +137,19 @@ asmlinkage long sys_list_ep_apps(int is_stats) {
 			" Applications =========================\n");
 		for (i = 0; i < CONFIG_NR_CPUS; ++i) {
 			if (ep_statistics[i].name[0] != '\0') {
-				pr_err("%-20s | Kernel Time : %-11lu | Kernel Entry %-11lu |"
-				" Page Fault Count: %-11lu | Mmap Count: %-11lu"
-				"| Mremap Count: %-11lu\n",
+				pr_err("%s----------------------------\n", ep_statistics[i].name);
+				pr_err("\t%-20s\n\tKernel Time : %-11lu\n\tKernel Entry %-11lu"
+				"\n\tPage Fault Count: %-11lu\n\tMmap Count: %-11lu"
+				"\n\tMremap Count: %-11lu\n\tPage Fault Time: %-11lu"
+				"\n\tMmap time: %-11lu\n\tRemap time:%-11lu\n",
 				ep_statistics[i].name, ep_statistics[i].kernel_time,
 				ep_statistics[i].kernel_entry,
 				ep_statistics[i].counters[EP_PGFAULT_EVENT],
 				ep_statistics[i].counters[EP_MMAP_EVENT],
-				ep_statistics[i].counters[EP_MREMAP_EVENT]);
+				ep_statistics[i].counters[EP_MREMAP_EVENT],
+				ep_statistics[i].timers[EP_PGFAULT_EVENT],
+				ep_statistics[i].timers[EP_MMAP_EVENT],
+				ep_statistics[i].timers[EP_MREMAP_EVENT]);
 			}
 		}
 	}

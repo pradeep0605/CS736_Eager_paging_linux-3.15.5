@@ -28,7 +28,7 @@
 #define __NR_apriori_paging_alloc 318
 #define ADD_STATS 318
 
-#define N_SYSCALLS (1000 * 1000)
+#define N_SYSCALLS (1000 * 1000 * 2)
 #define BILLION (1000000000)
 
 inline unsigned long get_current_time(void) {   

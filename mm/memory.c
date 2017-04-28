@@ -2214,7 +2214,10 @@ long __get_user_pages(struct task_struct *tsk, struct mm_struct *mm,
                         }
                     }
                 }
+				/*
+				TODO: TeamRoot: #memory order: Use this info if required
 				printk("Order for %lx: %d\n", start, apriori_order);
+				*/
             }
 
 			/*

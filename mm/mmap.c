@@ -1427,8 +1427,10 @@ unsigned long do_mmap_pgoff(struct file *file, unsigned long addr,
 				//printk(KERN_INFO "mmap for memory mapped file - len: %ld...\n", len);
 			}
 		} else if (mm &&  mm->apriori_paging_en == 1) {
+			/*
 			printk("VMA not under Apriori Paging Addr: %lx Len: %lx Flags: %lx Prot: %lx\n",
 				addr, len, flags, prot);
+			*/
 		}
     }
 	return addr;

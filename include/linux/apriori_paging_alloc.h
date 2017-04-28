@@ -24,6 +24,8 @@ enum ep_register_type {FOR_EAGER_PAGING = 0,
 typedef enum event_type { EP_MMAP_EVENT,
   						    EP_MREMAP_EVENT, 
 							EP_PGFAULT_EVENT,
+							EP_PGFAULT_MINOR_EVENT,
+							EP_PGFAULT_MAJOR_EVENT,
 							EP_MAX_EVENT
 }  ep_event_t;
 

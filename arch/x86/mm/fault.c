@@ -1049,8 +1049,21 @@ __do_page_fault(struct pt_regs *regs, unsigned long error_code,
 	ep_stats_t *stats = NULL;                    
 	stats = indexof_process_stats(current->comm);
 	record_start_event(stats, EP_PGFAULT_EVENT);
+	/* Only one of the below two (major / minor) will be used. As we don't know 
+	 * which one yet, we'll start the timing for both
+	 */
+	record_start_event(stats, EP_PGFAULT_MINOR_EVENT);
+	record_start_event(stats, EP_PGFAULT_MAJOR_EVENT);
+
+	/* Reduce the entry count by two as we're only entering once, but starting
+	 * three event recordings
+	 */
+	if (stats) {
+		stats->kernel_entry -= 2;
+	}
 
 	ep_dump_stack();
+
 
 	tsk = current;
 	mm = tsk->mm;
@@ -1297,7 +1310,26 @@ good_area:
 	check_v8086_mode(regs, address, tsk);
 
 	up_read(&mm->mmap_sem);
-	record_end_event(stats, EP_PGFAULT_EVENT);
+
+	if (fault & VM_FAULT_MAJOR) {
+		if (stats) {
+			record_end_event(stats, EP_PGFAULT_MAJOR_EVENT);
+			/* Reduce the counter to correct the mistake we did in the beggining
+			 * of the function */
+			stats->counters[EP_PGFAULT_MINOR_EVENT]--;
+			/* update the pagefault timers as well */
+			stats->timers[EP_PGFAULT_EVENT] += (stats->end_time - stats->start_time);
+		}
+	} else {
+		if (stats) {
+			record_end_event(stats, EP_PGFAULT_MINOR_EVENT);
+			/* Reduce the counter to correct the mistake we did in the beggining
+			 * of the function */
+			stats->counters[EP_PGFAULT_MAJOR_EVENT]--;
+			/* update the pagefault timers as well */
+			stats->timers[EP_PGFAULT_EVENT] += (stats->end_time - stats->start_time);
+		}
+	}
 }
 
 dotraplinkage void __kprobes notrace

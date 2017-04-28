@@ -7,8 +7,8 @@
 int main()
 {
 #if 1
-	int n = 10;
-	int k = 4;
+	unsigned long n = 1024 * 4;
+	int k = 5;
 	int * ptr = NULL;
 	/*
 	int *ptr = mmap(NULL, n, PROT_READ | PROT_WRITE, MAP_PRIVATE |
@@ -19,16 +19,16 @@ int main()
 		printf("Allocating %lf MB\n", (double)(n) / 1024 / 1024);
 		write(1, "After this\n", strlen("After this\n"));
 		// scanf("%d", &n);
-		n = n * 1024 * 4;
-
+		n = n * 10;
 		ptr = malloc(n);
-
+		
+		printf("Returned address %p\n", ptr);
 		int i = 0;
 		for(i = 0; i < n / sizeof(int); ++i) {
 			ptr[i] = i;
 		}
 	}
-	printf("Returned address %p\n", ptr);
+	getchar();
 #endif
 	return 0;
 }

@@ -138,17 +138,30 @@ asmlinkage long sys_list_ep_apps(int is_stats) {
 		for (i = 0; i < CONFIG_NR_CPUS; ++i) {
 			if (ep_statistics[i].name[0] != '\0') {
 				pr_err("%s----------------------------\n", ep_statistics[i].name);
-				pr_err("\t%-20s\n\tKernel Time : %-11lu\n\tKernel Entry %-11lu"
-				"\n\tPage Fault Count: %-11lu\n\tMmap Count: %-11lu"
-				"\n\tMremap Count: %-11lu\n\tPage Fault Time: %-11lu"
-				"\n\tMmap time: %-11lu\n\tRemap time:%-11lu\n",
-				ep_statistics[i].name, ep_statistics[i].kernel_time,
+				pr_err(
+				"\n\t\tKernel Entry    : %-11lu"
+				"\n\t\tKernel Time     : %-11lu"
+				"\n\t\tPGFLT Count     : %-11lu"
+				"\n\t\tPGFLT Minor     : %-11lu"
+				"\n\t\tPGFLT Major     : %-11lu"
+				"\n\t\tPGFLT Time      : %-11lu"
+				"\n\t\tPGFLT Minor Time: %-11lu"
+				"\n\t\tPGFLT Major Time: %-11lu"
+				"\n\t\tMmap Count      : %-11lu"
+				"\n\t\tMmap Time       : %-11lu"
+				"\n\t\tMremap Count    : %-11lu"
+				"\n\t\tMemap Time      : %-11lu\n",
 				ep_statistics[i].kernel_entry,
+				ep_statistics[i].kernel_time,
 				ep_statistics[i].counters[EP_PGFAULT_EVENT],
-				ep_statistics[i].counters[EP_MMAP_EVENT],
-				ep_statistics[i].counters[EP_MREMAP_EVENT],
+				ep_statistics[i].counters[EP_PGFAULT_MINOR_EVENT],
+				ep_statistics[i].counters[EP_PGFAULT_MAJOR_EVENT],
 				ep_statistics[i].timers[EP_PGFAULT_EVENT],
+				ep_statistics[i].timers[EP_PGFAULT_MINOR_EVENT],
+				ep_statistics[i].timers[EP_PGFAULT_MAJOR_EVENT],
+				ep_statistics[i].counters[EP_MMAP_EVENT],
 				ep_statistics[i].timers[EP_MMAP_EVENT],
+				ep_statistics[i].counters[EP_MREMAP_EVENT],
 				ep_statistics[i].timers[EP_MREMAP_EVENT]);
 			}
 		}
@@ -239,7 +252,8 @@ int ep_register_process(const char *proc_name, int option) {
     unsigned long pid;
 	*/
     unsigned int i = 0;
-    unsigned long ret = 0;
+	char *ret;
+
 	printk(KERN_ALERT "In function %s with proc_name = %s and option = %d\n", 
 		__func__, proc_name, option);
 	
@@ -279,6 +293,8 @@ int ep_register_process(const char *proc_name, int option) {
         }
     }
 #endif 
+	/* avoid compiler warings */
+	ret = ret;
 	return 0xdeadbeef;
 }
 
@@ -288,13 +304,17 @@ SYSCALL_DEFINE3(apriori_paging_alloc, const char __user**, proc_name, unsigned
 int, num_procs, int, option)
 {
     char proc[MAX_PROC_NAME_LEN];
+	long ret = 0;
 	printk(KERN_ALERT "\n\n======================\nInside system calls (%s)"
 		"\n============================\n\n", __func__);
 
 	if (proc_name != NULL) {
-		!strncpy_from_user(proc, proc_name[0], MAX_PROC_NAME_LEN);
+		ret = strncpy_from_user(proc, proc_name[0], MAX_PROC_NAME_LEN);
 		return ep_register_process(proc, option);
 	}
+
+	/* avoid compiler warinings */
+	ret = ret;
     return 0;
 }
 

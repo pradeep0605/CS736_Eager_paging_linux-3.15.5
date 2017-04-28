@@ -1,0 +1,31 @@
+test.out----------------------------
+
+         Kernel Entry    : 1824
+         Kernel Time     : 261279724
+         PGFLT Count     : 1810
+         PGFLT Minor     : 1810
+         PGFLT Major     : 0
+         PGFLT Time      : 261212316
+         PGFLT Minor Time: 261212316
+         PGFLT Major Time: 0
+         Mmap Count      : 14
+         Mmap Time       : 67408
+         Mremap Count    : 0
+         Memap Time      : 0
+
+
+test.out----------------------------
+
+         Kernel Entry    : 50       
+         Kernel Time     : 265106996
+         PGFLT Count     : 36       
+         PGFLT Minor     : 36       
+         PGFLT Major     : 0        
+         PGFLT Time      : 185369   
+         PGFLT Minor Time: 185369   
+         PGFLT Major Time: 0        
+         Mmap Count      : 14       
+         Mmap Time       : 264921627
+         Mremap Count    : 0        
+         Memap Time      : 0        
+

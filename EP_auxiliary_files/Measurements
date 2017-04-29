@@ -1,31 +1,269 @@
-test.out----------------------------
+User Space -> Kernel -> Userspace Switch time:
+1410 Nano-Seconds
 
-         Kernel Entry    : 1824
-         Kernel Time     : 261279724
-         PGFLT Count     : 1810
-         PGFLT Minor     : 1810
-         PGFLT Major     : 0
-         PGFLT Time      : 261212316
-         PGFLT Minor Time: 261212316
-         PGFLT Major Time: 0
-         Mmap Count      : 14
-         Mmap Time       : 67408
-         Mremap Count    : 0
-         Memap Time      : 0
+Total Time      : Kernel Time + ((Kernel Entry) * (User->Kernel switch time))
 
 
-test.out----------------------------
+Firefox: https://www.youtube.com/watch?v=AN25cGQUPRI
 
-         Kernel Entry    : 50       
-         Kernel Time     : 265106996
-         PGFLT Count     : 36       
-         PGFLT Minor     : 36       
-         PGFLT Major     : 0        
-         PGFLT Time      : 185369   
-         PGFLT Minor Time: 185369   
-         PGFLT Major Time: 0        
-         Mmap Count      : 14       
-         Mmap Time       : 264921627
-         Mremap Count    : 0        
-         Memap Time      : 0        
+Compiling 70 files inside mm/ folder in kernel
+[  580.883107] gcc----------------------------
+[  580.883111] 
+[  580.883111]          Kernel Entry    : 22454      
+[  580.883111]          Kernel Time     : 146547779  
+[  580.883111]          PGFLT Count     : 20039      
+[  580.883111]          PGFLT Minor     : 20039      
+[  580.883111]          PGFLT Major     : 0          
+[  580.883111]          PGFLT Time      : 121890385  
+[  580.883111]          PGFLT Minor Time: 121890385  
+[  580.883111]          PGFLT Major Time: 0          
+[  580.883111]          Mmap Count      : 2415       
+[  580.883111]          Mmap Time       : 24657394   
+[  580.883111]          Mremap Count    : 0          
+[  580.883111]          Memap Time      : 0          
+[  580.883111]          Total Time      : 178207919  
+[  580.883118] cc----------------------------
+[  580.883123] 
+[  580.883123]          Kernel Entry    : 353        
+[  580.883123]          Kernel Time     : 2050749    
+[  580.883123]          PGFLT Count     : 314        
+[  580.883123]          PGFLT Minor     : 314        
+[  580.883123]          PGFLT Major     : 0          
+[  580.883123]          PGFLT Time      : 1903589    
+[  580.883123]          PGFLT Minor Time: 1903589    
+[  580.883123]          PGFLT Major Time: 0          
+[  580.883123]          Mmap Count      : 39         
+[  580.883123]          Mmap Time       : 147160     
+[  580.883123]          Mremap Count    : 0          
+[  580.883123]          Memap Time      : 0          
+[  580.883123]          Total Time      : 2548479    
+[  580.883129] cc1----------------------------
+[  580.883134] 
+[  580.883134]          Kernel Entry    : 713159     
+[  580.883134]          Kernel Time     : 3541596791 
+[  580.883134]          PGFLT Count     : 700236     
+[  580.883134]          PGFLT Minor     : 700230     
+[  580.883134]          PGFLT Major     : 18446744073709551603
+[  580.883134]          PGFLT Time      : 3468672914 
+[  580.883134]          PGFLT Minor Time: 3469056812 
+[  580.883134]          PGFLT Major Time: 0          
+[  580.883134]          Mmap Count      : 13119      
+[  580.883134]          Mmap Time       : 72117729   
+[  580.883134]          Mremap Count    : 14         
+[  580.883134]          Memap Time      : 420400     
+[  580.883134]          Total Time      : 4547150981 
+[  580.883140] as----------------------------
+[  580.883144] 
+[  580.883144]          Kernel Entry    : 337949     
+[  580.883144]          Kernel Time     : 1700935864 
+[  580.883144]          PGFLT Count     : 330834     
+[  580.883144]          PGFLT Minor     : 330832     
+[  580.883144]          PGFLT Major     : 0          
+[  580.883144]          PGFLT Time      : 1665646184 
+[  580.883144]          PGFLT Minor Time: 1665660514 
+[  580.883144]          PGFLT Major Time: 0          
+[  580.883144]          Mmap Count      : 7130       
+[  580.883144]          Mmap Time       : 35275350   
+[  580.883144]          Mremap Count    : 0          
+[  580.883144]          Memap Time      : 0          
+[  580.883144]          Total Time      : 2177443954 
+[  580.883151] collect2----------------------------
+[  580.883154] 
+[  580.883154]          Kernel Entry    : 4329       
+[  580.883154]          Kernel Time     : 38782558   
+[  580.883154]          PGFLT Count     : 3700       
+[  580.883154]          PGFLT Minor     : 3700       
+[  580.883154]          PGFLT Major     : 0          
+[  580.883154]          PGFLT Time      : 35904458   
+[  580.883154]          PGFLT Minor Time: 35904458   
+[  580.883154]          PGFLT Major Time: 0          
+[  580.883154]          Mmap Count      : 629        
+[  580.883154]          Mmap Time       : 2878100    
+[  580.883154]          Mremap Count    : 0          
+[  580.883154]          Memap Time      : 0          
+[  580.883154]          Total Time      : 44886448   
+[  580.883162] ld----------------------------
+[  580.883165] 
+[  580.883165]          Kernel Entry    : 160040     
+[  580.883165]          Kernel Time     : 1368982028 
+[  580.883165]          PGFLT Count     : 156854     
+[  580.883165]          PGFLT Minor     : 156854     
+[  580.883165]          PGFLT Major     : 0          
+[  580.883165]          PGFLT Time      : 1347785673 
+[  580.883165]          PGFLT Minor Time: 1347785673 
+[  580.883165]          PGFLT Major Time: 0          
+[  580.883165]          Mmap Count      : 3186       
+[  580.883165]          Mmap Time       : 21196355   
+[  580.883165]          Mremap Count    : 0          
+[  580.883165]          Memap Time      : 0          
+[  580.883165]          Total Time      : 1594638428 
+========================================================================================================================
+
+[  803.802625] gcc----------------------------
+[  803.802629] 
+[  803.802629]          Kernel Entry    : 16461      
+[  803.802629]          Kernel Time     : 120914319  
+[  803.802629]          PGFLT Count     : 14046      
+[  803.802629]          PGFLT Minor     : 14046      
+[  803.802629]          PGFLT Major     : 0          
+[  803.802629]          PGFLT Time      : 104184037  
+[  803.802629]          PGFLT Minor Time: 104184037  
+[  803.802629]          PGFLT Major Time: 0          
+[  803.802629]          Mmap Count      : 2415       
+[  803.802629]          Mmap Time       : 16730282   
+[  803.802629]          Mremap Count    : 0          
+[  803.802629]          Memap Time      : 0          
+[  803.802629]          Total Time      : 144124329  
+[  803.802636] cc----------------------------
+[  803.802640] 
+[  803.802640]          Kernel Entry    : 63         
+[  803.802640]          Kernel Time     : 304793     
+[  803.802640]          PGFLT Count     : 54         
+[  803.802640]          PGFLT Minor     : 54         
+[  803.802640]          PGFLT Major     : 0          
+[  803.802640]          PGFLT Time      : 255895     
+[  803.802640]          PGFLT Minor Time: 255895     
+[  803.802640]          PGFLT Major Time: 0          
+[  803.802640]          Mmap Count      : 9          
+[  803.802640]          Mmap Time       : 48898      
+[  803.802640]          Mremap Count    : 0          
+[  803.802640]          Memap Time      : 0          
+[  803.802640]          Total Time      : 393623     
+[  803.802646] cc1----------------------------
+[  803.802650] 
+[  803.802650]          Kernel Entry    : 86076      
+[  803.802650]          Kernel Time     : 1160092336 
+[  803.802650]          PGFLT Count     : 72993      
+[  803.802650]          PGFLT Minor     : 72993      
+[  803.802650]          PGFLT Major     : 1          
+[  803.802650]          PGFLT Time      : 547215037  
+[  803.802650]          PGFLT Minor Time: 547211446  
+[  803.802650]          PGFLT Major Time: 0          
+[  803.802650]          Mmap Count      : 13071      
+[  803.802650]          Mmap Time       : 609545924  
+[  803.802650]          Mremap Count    : 14         
+[  803.802650]          Memap Time      : 3334966    
+[  803.802650]          Total Time      : 1281459496 
+[  803.802656] as----------------------------
+[  803.802659] 
+[  803.802659]          Kernel Entry    : 27376      
+[  803.802659]          Kernel Time     : 421374188  
+[  803.802659]          PGFLT Count     : 20277      
+[  803.802659]          PGFLT Minor     : 20277      
+[  803.802659]          PGFLT Major     : 0          
+[  803.802659]          PGFLT Time      : 183790225  
+[  803.802659]          PGFLT Minor Time: 183790225  
+[  803.802659]          PGFLT Major Time: 0          
+[  803.802659]          Mmap Count      : 7099       
+[  803.802659]          Mmap Time       : 237583963  
+[  803.802659]          Mremap Count    : 0          
+[  803.802659]          Memap Time      : 0          
+[  803.802659]          Total Time      : 459974348  
+[  803.802665] collect2----------------------------
+[  803.802669] 
+[  803.802669]          Kernel Entry    : 3054       
+[  803.802669]          Kernel Time     : 21780715   
+[  803.802669]          PGFLT Count     : 2449       
+[  803.802669]          PGFLT Minor     : 2449       
+[  803.802669]          PGFLT Major     : 0          
+[  803.802669]          PGFLT Time      : 15784846   
+[  803.802669]          PGFLT Minor Time: 15784846   
+[  803.802669]          PGFLT Major Time: 0          
+[  803.802669]          Mmap Count      : 605        
+[  803.802669]          Mmap Time       : 5995869    
+[  803.802669]          Mremap Count    : 0          
+[  803.802669]          Memap Time      : 0          
+[  803.802669]          Total Time      : 26086855   
+[  803.802689] ld----------------------------
+[  803.802693] 
+[  803.802693]          Kernel Entry    : 137179     
+[  803.802693]          Kernel Time     : 885864175  
+[  803.802693]          PGFLT Count     : 134502     
+[  803.802693]          PGFLT Minor     : 134502     
+[  803.802693]          PGFLT Major     : 0          
+[  803.802693]          PGFLT Time      : 863040378  
+[  803.802693]          PGFLT Minor Time: 863040378  
+[  803.802693]          PGFLT Major Time: 0          
+[  803.802693]          Mmap Count      : 2675       
+[  803.802693]          Mmap Time       : 22823797   
+[  803.802693]          Mremap Count    : 0          
+[  803.802693]          Memap Time      : 0          
+[  803.802693]          Total Time      : 1079286565 
+
+
+
+Running Redis benchmark
+========================================================
+Demain Paging:
+	Worakload A:
+		redis-server----------------------------
+
+			 Kernel Entry    : 192        
+			 Kernel Time     : 15980113   
+			 PGFLT Count     : 162        
+			 PGFLT Minor     : 162        
+			 PGFLT Major     : 0          
+			 PGFLT Time      : 15812663   
+			 PGFLT Minor Time: 15812663   
+			 PGFLT Major Time: 0          
+			 Mmap Count      : 30         
+			 Mmap Time       : 167450     
+			 Mremap Count    : 0          
+			 Memap Time      : 0          
+			 Total Time      : 16250833   
+
+	Worakload B:
+		redis-server----------------------------
+
+			 Kernel Entry    : 184        
+			 Kernel Time     : 992319     
+			 PGFLT Count     : 154        
+			 PGFLT Minor     : 154        
+			 PGFLT Major     : 0          
+			 PGFLT Time      : 909425     
+			 PGFLT Minor Time: 909425     
+			 PGFLT Major Time: 0          
+			 Mmap Count      : 30         
+			 Mmap Time       : 82894      
+			 Mremap Count    : 0          
+			 Memap Time      : 0          
+			 Total Time      : 1251759    
+
+
+Eager Paging:
+	Workload A:
+		redis-server----------------------
+
+			 Kernel Entry    : 141    
+			 Kernel Time     : 3751851
+			 PGFLT Count     : 110    
+			 PGFLT Minor     : 110    
+			 PGFLT Major     : 0      
+			 PGFLT Time      : 388928 
+			 PGFLT Minor Time: 388928 
+			 PGFLT Major Time: 0      
+			 Mmap Count      : 31     
+			 Mmap Time       : 3362923
+			 Mremap Count    : 0      
+			 Memap Time      : 0      
+			 Total Time      : 3950661
+
+
+	Workload B:
+		redis-server----------------------------
+			 Kernel Entry    : 139        
+			 Kernel Time     : 4841928    
+			 PGFLT Count     : 109        
+			 PGFLT Minor     : 109        
+			 PGFLT Major     : 0          
+			 PGFLT Time      : 548562     
+			 PGFLT Minor Time: 548562     
+			 PGFLT Major Time: 0          
+			 Mmap Count      : 30         
+			 Mmap Time       : 4293366    
+			 Mremap Count    : 0          
+			 Memap Time      : 0          
+			 Total Time      : 5037918    
+
+
 

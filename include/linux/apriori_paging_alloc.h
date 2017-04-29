@@ -18,8 +18,15 @@
 #define MILLION (1000000)
 #define THOUSANDS (1000)
 
+/* This is a hard coded number. For the Fedora-16 running in virtual machine.
+ * This number indicates the time neded to do a context switch from user space
+ * to kernel space and back.
+ */ 
+#define CTXT_SWTCH_TIME (1410)
+
 enum ep_register_type {FOR_EAGER_PAGING = 0,
 					   FOR_STATISTICS = 1};
+
 
 typedef enum event_type { EP_MMAP_EVENT,
   						    EP_MREMAP_EVENT, 

@@ -150,7 +150,8 @@ asmlinkage long sys_list_ep_apps(int is_stats) {
 				"\n\t\tMmap Count      : %-11lu"
 				"\n\t\tMmap Time       : %-11lu"
 				"\n\t\tMremap Count    : %-11lu"
-				"\n\t\tMemap Time      : %-11lu\n",
+				"\n\t\tMemap Time      : %-11lu"
+				"\n\t\tTotal Time      : %-11lu\n",
 				ep_statistics[i].kernel_entry,
 				ep_statistics[i].kernel_time,
 				ep_statistics[i].counters[EP_PGFAULT_EVENT],
@@ -162,10 +163,12 @@ asmlinkage long sys_list_ep_apps(int is_stats) {
 				ep_statistics[i].counters[EP_MMAP_EVENT],
 				ep_statistics[i].timers[EP_MMAP_EVENT],
 				ep_statistics[i].counters[EP_MREMAP_EVENT],
-				ep_statistics[i].timers[EP_MREMAP_EVENT]);
+				ep_statistics[i].timers[EP_MREMAP_EVENT],
+				(ep_statistics[i].kernel_time + 
+				(ep_statistics[i].kernel_entry * CTXT_SWTCH_TIME)));
 			}
 		}
-	}
+	} 
 	return 0xdeadbeef;
 }
 
@@ -253,20 +256,22 @@ int ep_register_process(const char *proc_name, int option) {
 	*/
     unsigned int i = 0;
 	char *ret;
-
+	ep_stats_t *stats = NULL;
 	printk(KERN_ALERT "In function %s with proc_name = %s and option = %d\n", 
 		__func__, proc_name, option);
 	
 	/* Enable collection of statistics for the process `proc_name` */
 	if (option == FOR_STATISTICS) {
 		i = 0;
+		stats = indexof_process_stats(proc_name);
+		if (stats == NULL) {
+			while(ep_statistics[i].name[0] != '\0') {
+				i++;
+			}
 
-		while(ep_statistics[i].name[0] != '\0') {
-			i++;
+			ret = strncpy(ep_statistics[i].name, proc_name,
+				MAX_PROC_NAME_LEN);
 		}
-
-		ret = strncpy(ep_statistics[i].name, proc_name,
-			MAX_PROC_NAME_LEN);
 	} else if (option == FOR_EAGER_PAGING) {
 		/* Enabled eager Paging for proc_name process */
 		i = 0;

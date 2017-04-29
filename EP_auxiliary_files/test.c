@@ -24,7 +24,12 @@ int main()
 		
 		printf("Returned address %p\n", ptr);
 		int i = 0;
+		/*
 		for(i = 0; i < n / sizeof(int); ++i) {
+			ptr[i] = i;
+		}
+		*/
+		for(i = n / sizeof(int) - 1; i >= 0 ; --i) {
 			ptr[i] = i;
 		}
 	}

@@ -2189,7 +2189,7 @@ long __get_user_pages(struct task_struct *tsk, struct mm_struct *mm,
                 struct zone* pzone;
                 node_0 = NODE_DATA(0);
 
-		apriori_order = 0;
+				apriori_order = 0;
 
 //                pzone = &node_0->node_zones[ZONE_DMA32];
                 pzone = &node_0->node_zones[ZONE_NORMAL];

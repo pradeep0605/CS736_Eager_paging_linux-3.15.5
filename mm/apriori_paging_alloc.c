@@ -24,6 +24,7 @@ ep_stats_t zeroed_stats;
 unsigned char enable_dump_stack;
 unsigned char enable_prints;
 unsigned char enable_stats;
+unsigned char enable_alloc_overhead_stats;
 
 ep_stats_t* indexof_process_stats(const char* proc_name);
 
@@ -37,6 +38,12 @@ inline unsigned long get_current_time(void) {
 	return time;
 }
 
+inline void record_alloc_event(ep_stats_t *application, ep_event_t event,
+	int order) {
+		if (application) {
+			application->orders[order]++;
+		}
+}
 inline void record_start_event(ep_stats_t *application, ep_event_t event) {
 	if (application != NULL) {
 		application->start_time = get_current_time();
@@ -116,13 +123,24 @@ asmlinkage long sys_ep_control_syscall(int val) {
 			enable_stats = 0;
 			pr_err("EP: Disabled stats");
 			break;
+		case 4:
+			pr_err("EP: Enabled alloc overheads stats");
+			enable_alloc_overhead_stats = 1;
+			break;
+		case -4:
+			pr_err("EP: Disabled alloc overheads stats");
+			enable_alloc_overhead_stats = 0;
+			break;
 	}
 	return 0;
 }
 
 // asmlinkage long sys_list_ep_apps(void) {
 asmlinkage long sys_list_ep_apps(int is_stats) {
-	int i = 0;
+	int i = 0, j = 0, k = 0;
+	char str[1000] = {0};
+	int len = 0;
+	unsigned long total_allocated = 0;
 	
 	if (is_stats == FOR_EAGER_PAGING) {
 		pr_err(" =================== Listing all Eager Paging Enabled"
@@ -137,7 +155,7 @@ asmlinkage long sys_list_ep_apps(int is_stats) {
 			" Applications =========================\n");
 		for (i = 0; i < CONFIG_NR_CPUS; ++i) {
 			if (ep_statistics[i].name[0] != '\0') {
-				pr_err("%s----------------------------\n", ep_statistics[i].name);
+				pr_err("%s----------------------------#\n", ep_statistics[i].name);
 				pr_err(
 				"\n\t\tKernel Entry    : %-11lu"
 				"\n\t\tKernel Time     : %-11lu"
@@ -166,9 +184,31 @@ asmlinkage long sys_list_ep_apps(int is_stats) {
 				ep_statistics[i].timers[EP_MREMAP_EVENT],
 				(ep_statistics[i].kernel_time + 
 				(ep_statistics[i].kernel_entry * CTXT_SWTCH_TIME)));
+				
+				k = MAX_ORDER;
+				while (k >= 0 && ep_statistics[i].orders[k] == 0) { k--;}
+				
+				for (j = 0; j <= k; ++j) {
+					len = strlen(str);
+					total_allocated +=
+					(ep_statistics[i].orders[j] * (1 << j) * PAGE_SIZE);
+
+					if (j == 9) {	/* Print things in the next line */
+						sprintf(&str[len], "\n\t\t");
+						len = strlen(str);
+					}
+					sprintf(&str[len],
+						"O%-2d:%lu, ", j, ep_statistics[i].orders[j]);
+				}
+				pr_err("\t\tTotal Kernel Allocation: %lu (B), %lu (KB), %lu (MB)\n with PAGE_SIZE = %lu",
+					(total_allocated), (total_allocated / 1024),
+					(total_allocated / (1024 * 1024)), PAGE_SIZE);
+
+				pr_err("\t\tOrder: %s\n", str);
 			}
 		}
 	} 
+
 	return 0xdeadbeef;
 }
 
@@ -328,7 +368,7 @@ int, num_procs, int, option)
  *
  */
 
-int indexof_apriori_paged_process(const char* proc_name)
+inline int indexof_apriori_paged_process(const char* proc_name)
 {
     unsigned int i;
     for ( i = 0 ; i < CONFIG_NR_CPUS ; i++ )     {

@@ -67,10 +67,11 @@ int main(int argc, char **argv) {
 		printf("Usage: ./ep_control [--add | --list | --clear app_name |"
 		" --clear-all | --ctrl #number | --add-stats | --clear-stats |\n"
 		" --clear-all-stats | --reset-stats | --reset-all-stats | --list-stats ]\n");
-		printf("--ctrl #number options: \n1) enabled stack dump (-1) for disabling ]\n");
-		printf("2) enabled prints (-2) for disabling ]\n");
-		printf("3) enabled stats (-3) disabling stats ]\n");
-		printf("64) Empty Syscall for time calculation]\n");
+		printf("--ctrl #number options: \n1) enabled stack dump (-1) for disabling \n");
+		printf("2) enabled prints (-2) for disabling \n");
+		printf("3) enabled stats (-3) disabling stats \n");
+		printf("4) enabled alloc overhead stats (-4) disabling\n");
+		printf("64) Empty Syscall for time calculation\n");
 		return 0;
 	}
 	

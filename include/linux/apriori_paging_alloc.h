@@ -12,6 +12,7 @@
 #define MAX_PROC_NAME_LEN 50
 
 #include <linux/time.h>
+#include <linux/mmzone.h>
 //#include <linux/timekeeping.h>
 
 #define BILLION (1000000000)
@@ -27,12 +28,12 @@
 enum ep_register_type {FOR_EAGER_PAGING = 0,
 					   FOR_STATISTICS = 1};
 
-
 typedef enum event_type { EP_MMAP_EVENT,
   						    EP_MREMAP_EVENT, 
 							EP_PGFAULT_EVENT,
 							EP_PGFAULT_MINOR_EVENT,
 							EP_PGFAULT_MAJOR_EVENT,
+							EP_ALLOC_ORDER_EVENT,
 							EP_MAX_EVENT
 }  ep_event_t;
 
@@ -50,7 +51,7 @@ typedef struct eager_paging_statistics {
 	/* Coutners for all the events */
 	unsigned long counters[EP_MAX_EVENT];
 	unsigned long timers[EP_MAX_EVENT];
-
+	unsigned long orders[MAX_ORDER + 1];
 } ep_stats_t;
 
 
@@ -59,6 +60,7 @@ extern char apriori_paging_process[CONFIG_NR_CPUS][MAX_PROC_NAME_LEN];
 extern unsigned char enable_dump_stack;
 extern unsigned char enable_prints;
 extern unsigned char enable_stats;
+extern unsigned char enable_alloc_overhead_stats;
 
 int is_process_of_apriori_paging(const char* proc_name);
 inline unsigned long get_current_time(void);
@@ -68,6 +70,8 @@ inline void incr_pgfault_count(ep_stats_t *application);
 inline void incr_mmap_count(ep_stats_t *application);
 int ep_register_process(const char *proc_name, int option);
 ep_stats_t* indexof_process_stats(const char* proc_name);
+inline void record_alloc_event(ep_stats_t *application, ep_event_t event,
+	int order);
 
 #define ep_print(...) if (enable_prints) \
 							pr_err(__VA_ARGS__)

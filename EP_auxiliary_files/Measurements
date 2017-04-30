@@ -94,6 +94,144 @@ test.out----------------------------#
          User Space Requested: 470380082 (B), 459355 (KB), 448 (MB)
 
 =========================================================================================================
+Work load A, B, C, D, E, F:
+
+Redis server seems to be really smart. Once it allocates its memory, it goes through 19MB of data to make sure
+that these pages are allocated so that we do not enter kernel for allocation while running workloads (Smart redis is).
+
+Demand Paging:
+	redis-server----------------------------#
+
+		 Kernel Entry    : 315        
+		 Kernel Time     : 1758588    
+		 PGFLT Count     : 282        
+		 PGFLT Minor     : 282        
+		 PGFLT Major     : 0          
+		 PGFLT Time      : 1649096    
+		 PGFLT Minor Time: 1649096    
+		 PGFLT Major Time: 0          
+		 Mmap Count      : 33         
+		 Mmap Time       : 109492     
+		 Mremap Count    : 0          
+		 Memap Time      : 0          
+		 Total Time      : 2231088    
+		 Order: O0 :791, O1 :0, O2 :4, O3 :2, O4 :0, O5 :0, O6 :0, O7 :0, O8 :0, 
+		 O9 :8, 
+		 Total Kernel Allocation: 20148224 (B), 19676 (KB), 19 (MB) with PAGE_SIZE = 4096
+		 User Space Requested: 189651554 (B), 185206 (KB), 180 (MB)
+
+
+Eager Paging:
+		redis-server----------------------------#
+
+		 Kernel Entry    : 268
+		 Kernel Time     : 7063471
+		 PGFLT Count     : 235
+		 PGFLT Minor     : 235
+		 PGFLT Major     : 0
+		 PGFLT Time      : 1518964
+		 PGFLT Minor Time: 1518964
+		 PGFLT Major Time: 0
+		 Mmap Count      : 33
+		 Mmap Time       : 5544507
+		 Mremap Count    : 0
+		 Memap Time      : 0
+		 Total Time      : 7465471
+		 Order: O0 :1020, O1 :8, O2 :14, O3 :8, O4 :6, O5 :8, O6 :6, O7 :6, O8 :6,
+		 O9 :12, O10:0, O11:4,
+		 Total Kernel Allocation: 75907072 (B), 74128 (KB), 72 (MB) with PAGE_SIZE = 4096
+		 User Space Requested: 183978594 (B), 179666 (KB), 175 (MB)
+
+=========================================================================================================
+simmedium
+	Demand Paging:
+		dedup----------------------------#
+
+		 Kernel Entry    : 171133     
+		 Kernel Time     : 373412463  
+		 PGFLT Count     : 171104     
+		 PGFLT Minor     : 171105     
+		 PGFLT Major     : 1          
+		 PGFLT Time      : 372137803  
+		 PGFLT Minor Time: 372141867  
+		 PGFLT Major Time: 0          
+		 Mmap Count      : 34         
+		 Mmap Time       : 1083854    
+		 Mremap Count    : 2          
+		 Memap Time      : 187167     
+		 Total Time      : 630111963  
+		 Order: O0 :197494, O1 :18, O2 :10, O3 :0, O4 :0, O5 :0, O6 :0, O7 :0, O8 :0, 
+		 O9 :62, 
+		 Total Kernel Allocation: 939270144 (B), 917256 (KB), 895 (MB) with PAGE_SIZE = 4096
+		 User Space Requested: 710313738 (B), 693665 (KB), 677 (MB)
+
+
+	Eager Paging.
+		dedup----------------------------#
+
+		 Kernel Entry    : 170324     
+		 Kernel Time     : 604517115  
+		 PGFLT Count     : 170290     
+		 PGFLT Minor     : 170291     
+		 PGFLT Major     : 0          
+		 PGFLT Time      : 431982826  
+		 PGFLT Minor Time: 431985246  
+		 PGFLT Major Time: 0          
+		 Mmap Count      : 34         
+		 Mmap Time       : 150458123  
+		 Mremap Count    : 2          
+		 Memap Time      : 22073746   
+		 Total Time      : 860003115  
+		 Order: O0 :195437, O1 :0, O2 :20, O3 :72, O4 :2, O5 :6, O6 :4, O7 :8, O8 :2, 
+		 O9 :4, O10:22, O11:10, O12:2, O13:0, O14:0, O15:4, 
+		 Total Kernel Allocation: 1566429184 (B), 1529716 (KB), 1493 (MB) with PAGE_SIZE = 4096
+		 User Space Requested: 785897226 (B), 767477 (KB), 749 (MB)
+
+
+----------------------------------------------------------------------------------------------------------------
+SIMLARGE
+
+	Demand Paging:
+		dedup----------------------------#
+			 Kernel Entry    : 970565     
+			 Kernel Time     : 2329025188 
+			 PGFLT Count     : 970550     
+			 PGFLT Minor     : 970549     
+			 PGFLT Major     : 0          
+			 PGFLT Time      : 2327098101 
+			 PGFLT Minor Time: 2327137168 
+			 PGFLT Major Time: 0          
+			 Mmap Count      : 35         
+			 Mmap Time       : 448843     
+			 Mremap Count    : 2          
+			 Memap Time      : 1439177    
+			 Total Time      : 3784872688 
+			 Order: O0 :1068296, O1 :46, O2 :10, O3 :0, O4 :0, O5 :0, O6 :0, O7 :0, O8 :0, 
+			 O9 :372, 
+			 Total Kernel Allocation: 5156421632 (B), 5035568 (KB), 4917 (MB) with PAGE_SIZE = 4096
+			 User Space Requested: 1117091594 (B), 1090909 (KB), 1065 (MB)
+
+	EagerPaging:
+		dedup----------------------------#
+
+			 Kernel Entry    : 965807     
+			 Kernel Time     : 2871385459 
+			 PGFLT Count     : 965783     
+			 PGFLT Minor     : 965781     
+			 PGFLT Major     : 8          
+			 PGFLT Time      : 2437683795 
+			 PGFLT Minor Time: 2437704749 
+			 PGFLT Major Time: 0          
+			 Mmap Count      : 35         
+			 Mmap Time       : 423688291  
+			 Mremap Count    : 2          
+			 Memap Time      : 9989610    
+			 Total Time      : 4320095959 
+			 Order: O0 :1061600, O1 :40, O2 :16, O3 :434, O4 :4, O5 :4, O6 :14, O7 :4, O8 :6, 
+			 O9 :42, O10:8, O11:6, O12:2, O13:2, O14:0, O15:7, 
+			 Total Kernel Allocation: 5588123648 (B), 5457152 (KB), 5329 (MB) with PAGE_SIZE = 4096
+			 User Space Requested: 1110193930 (B), 1084173 (KB), 1058 (MB)
+----------------------------------------------------------------------------------------------------------------
 
 
 

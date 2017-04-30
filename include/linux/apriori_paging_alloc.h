@@ -74,6 +74,7 @@ int ep_register_process(const char *proc_name, int option);
 ep_stats_t* indexof_process_stats(const char* proc_name);
 inline void record_alloc_event(ep_stats_t *application, ep_event_t event,
 	int order);
+inline void dec_event_counter(ep_stats_t *application, ep_event_t event);
 
 #define ep_print(...) if (enable_prints) \
 							pr_err(__VA_ARGS__)

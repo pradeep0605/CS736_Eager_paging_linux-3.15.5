@@ -96,6 +96,13 @@ inline void incr_mremap_count(ep_stats_t *application) {
 	}
 }
 
+inline void dec_event_counter(ep_stats_t *application, ep_event_t event) {
+	if (application != NULL && event < EP_MAX_EVENT) {
+		if (application->counters[event] > 0) {
+			application->counters[event]--;
+		}
+	}
+}
 int indexof_apriori_paged_process(const char* proc_name);
 
 asmlinkage long sys_ep_control_syscall(int val) {

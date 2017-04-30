@@ -1078,6 +1078,8 @@ __do_page_fault(struct pt_regs *regs, unsigned long error_code,
 
 	if (unlikely(kmmio_fault(regs, address))) {
 		record_end_event(stats, EP_PGFAULT_EVENT);
+		dec_event_counter(stats, EP_PGFAULT_MAJOR_EVENT);
+		dec_event_counter(stats, EP_PGFAULT_MINOR_EVENT);
 		return;
 	}
 
@@ -1098,11 +1100,15 @@ __do_page_fault(struct pt_regs *regs, unsigned long error_code,
 		if (!(error_code & (PF_RSVD | PF_USER | PF_PROT))) {
 			if (vmalloc_fault(address) >= 0) {
 				record_end_event(stats, EP_PGFAULT_EVENT);
+				dec_event_counter(stats, EP_PGFAULT_MAJOR_EVENT);
+				dec_event_counter(stats, EP_PGFAULT_MINOR_EVENT);
 				return;
 			}
 
 			if (kmemcheck_fault(regs, address, error_code)) {
 				record_end_event(stats, EP_PGFAULT_EVENT);
+				dec_event_counter(stats, EP_PGFAULT_MAJOR_EVENT);
+				dec_event_counter(stats, EP_PGFAULT_MINOR_EVENT);
 				return;
 			}
 		}
@@ -1110,12 +1116,16 @@ __do_page_fault(struct pt_regs *regs, unsigned long error_code,
 		/* Can handle a stale RO->RW TLB: */
 		if (spurious_fault(error_code, address)) {
 			record_end_event(stats, EP_PGFAULT_EVENT);
+			dec_event_counter(stats, EP_PGFAULT_MAJOR_EVENT);
+			dec_event_counter(stats, EP_PGFAULT_MINOR_EVENT);
 			return;
 		}
 
 		/* kprobes don't want to hook the spurious faults: */
 		if (kprobes_fault(regs)) {
 			record_end_event(stats, EP_PGFAULT_EVENT);
+			dec_event_counter(stats, EP_PGFAULT_MAJOR_EVENT);
+			dec_event_counter(stats, EP_PGFAULT_MINOR_EVENT);
 			return;
 		}
 		/*
@@ -1124,6 +1134,8 @@ __do_page_fault(struct pt_regs *regs, unsigned long error_code,
 		 */
 		bad_area_nosemaphore(regs, error_code, address);
 		record_end_event(stats, EP_PGFAULT_EVENT);
+		dec_event_counter(stats, EP_PGFAULT_MAJOR_EVENT);
+		dec_event_counter(stats, EP_PGFAULT_MINOR_EVENT);
 		
 		return;
 	}
@@ -1131,6 +1143,8 @@ __do_page_fault(struct pt_regs *regs, unsigned long error_code,
 	/* kprobes don't want to hook the spurious faults: */
 	if (unlikely(kprobes_fault(regs))) {
 		record_end_event(stats, EP_PGFAULT_EVENT);
+		dec_event_counter(stats, EP_PGFAULT_MAJOR_EVENT);
+		dec_event_counter(stats, EP_PGFAULT_MINOR_EVENT);
 		return;
 	}
 
@@ -1140,6 +1154,8 @@ __do_page_fault(struct pt_regs *regs, unsigned long error_code,
 	if (unlikely(smap_violation(error_code, regs))) {
 		bad_area_nosemaphore(regs, error_code, address);
 		record_end_event(stats, EP_PGFAULT_EVENT);
+		dec_event_counter(stats, EP_PGFAULT_MAJOR_EVENT);
+		dec_event_counter(stats, EP_PGFAULT_MINOR_EVENT);
 		return;
 	}
 
@@ -1150,6 +1166,8 @@ __do_page_fault(struct pt_regs *regs, unsigned long error_code,
 	if (unlikely(in_atomic() || !mm)) {
 		bad_area_nosemaphore(regs, error_code, address);
 		record_end_event(stats, EP_PGFAULT_EVENT);
+		dec_event_counter(stats, EP_PGFAULT_MAJOR_EVENT);
+		dec_event_counter(stats, EP_PGFAULT_MINOR_EVENT);
 		return;
 	}
 
@@ -1195,6 +1213,8 @@ __do_page_fault(struct pt_regs *regs, unsigned long error_code,
 		    !search_exception_tables(regs->ip)) {
 			bad_area_nosemaphore(regs, error_code, address);
 			record_end_event(stats, EP_PGFAULT_EVENT);
+			dec_event_counter(stats, EP_PGFAULT_MAJOR_EVENT);
+			dec_event_counter(stats, EP_PGFAULT_MINOR_EVENT);
 			return;
 		}
 retry:
@@ -1212,6 +1232,8 @@ retry:
 	if (unlikely(!vma)) {
 		bad_area(regs, error_code, address);
 		record_end_event(stats, EP_PGFAULT_EVENT);
+		dec_event_counter(stats, EP_PGFAULT_MAJOR_EVENT);
+		dec_event_counter(stats, EP_PGFAULT_MINOR_EVENT);
 		return;
 	}
 	if (likely(vma->vm_start <= address))
@@ -1219,6 +1241,8 @@ retry:
 	if (unlikely(!(vma->vm_flags & VM_GROWSDOWN))) {
 		bad_area(regs, error_code, address);
 		record_end_event(stats, EP_PGFAULT_EVENT);
+		dec_event_counter(stats, EP_PGFAULT_MAJOR_EVENT);
+		dec_event_counter(stats, EP_PGFAULT_MINOR_EVENT);
 		return;
 	}
 	if (error_code & PF_USER) {
@@ -1231,12 +1255,16 @@ retry:
 		if (unlikely(address + 65536 + 32 * sizeof(unsigned long) < regs->sp)) {
 			bad_area(regs, error_code, address);
 			record_end_event(stats, EP_PGFAULT_EVENT);
+			dec_event_counter(stats, EP_PGFAULT_MAJOR_EVENT);
+			dec_event_counter(stats, EP_PGFAULT_MINOR_EVENT);
 			return;
 		}
 	}
 	if (unlikely(expand_stack(vma, address))) {
 		bad_area(regs, error_code, address);
 		record_end_event(stats, EP_PGFAULT_EVENT);
+		dec_event_counter(stats, EP_PGFAULT_MAJOR_EVENT);
+		dec_event_counter(stats, EP_PGFAULT_MINOR_EVENT);
 		return;
 	}
 
@@ -1248,6 +1276,8 @@ good_area:
 	if (unlikely(access_error(error_code, vma))) {
 		bad_area_access_error(regs, error_code, address);
 		record_end_event(stats, EP_PGFAULT_EVENT);
+		dec_event_counter(stats, EP_PGFAULT_MAJOR_EVENT);
+		dec_event_counter(stats, EP_PGFAULT_MINOR_EVENT);
 		return;
 	}
 
@@ -1274,12 +1304,16 @@ good_area:
 	 */
 	if (unlikely((fault & VM_FAULT_RETRY) && fatal_signal_pending(current))) {
 		record_end_event(stats, EP_PGFAULT_EVENT);
+		dec_event_counter(stats, EP_PGFAULT_MAJOR_EVENT);
+		dec_event_counter(stats, EP_PGFAULT_MINOR_EVENT);
 		return;
 	}
 
 	if (unlikely(fault & VM_FAULT_ERROR)) {
 		mm_fault_error(regs, error_code, address, fault);
 		record_end_event(stats, EP_PGFAULT_EVENT);
+		dec_event_counter(stats, EP_PGFAULT_MAJOR_EVENT);
+		dec_event_counter(stats, EP_PGFAULT_MINOR_EVENT);
 		return;
 	}
 
@@ -1316,7 +1350,7 @@ good_area:
 			record_end_event(stats, EP_PGFAULT_MAJOR_EVENT);
 			/* Reduce the counter to correct the mistake we did in the beggining
 			 * of the function */
-			stats->counters[EP_PGFAULT_MINOR_EVENT]--;
+			dec_event_counter(stats, EP_PGFAULT_MINOR_EVENT);
 			/* update the pagefault timers as well */
 			stats->timers[EP_PGFAULT_EVENT] += (stats->end_time - stats->start_time);
 		}
@@ -1325,7 +1359,7 @@ good_area:
 			record_end_event(stats, EP_PGFAULT_MINOR_EVENT);
 			/* Reduce the counter to correct the mistake we did in the beggining
 			 * of the function */
-			stats->counters[EP_PGFAULT_MAJOR_EVENT]--;
+			dec_event_counter(stats, EP_PGFAULT_MAJOR_EVENT);
 			/* update the pagefault timers as well */
 			stats->timers[EP_PGFAULT_EVENT] += (stats->end_time - stats->start_time);
 		}

@@ -485,6 +485,13 @@ SYSCALL_DEFINE5(mremap, unsigned long, addr, unsigned long, old_len,
 	unsigned long apriori_flag = 0;
 	ep_stats_t *stats = NULL;                    
 
+	if (enable_alloc_overhead_stats) {
+		if (new_len - old_len > 0) {
+			record_alloc_event(indexof_process_stats(current->comm),
+				EP_ALLOC_REQ_FROM_USR_SPACE, new_len - old_len);
+		}
+	}
+
 	stats = indexof_process_stats(current->comm);
 	record_start_event(stats, EP_MREMAP_EVENT);
 

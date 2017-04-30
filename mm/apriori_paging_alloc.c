@@ -40,10 +40,22 @@ inline unsigned long get_current_time(void) {
 
 inline void record_alloc_event(ep_stats_t *application, ep_event_t event,
 	int order) {
-		if (application) {
-			application->orders[order]++;
-		}
+	switch(event) {
+		case EP_ALLOC_ORDER_EVENT:
+			if (application) {
+				application->orders[order]++;
+			}
+			break;
+		case EP_ALLOC_REQ_FROM_USR_SPACE:
+			if (application) {
+				application->user_mem_req += order;
+			}
+			break;
+		default:
+			break;
+	}
 }
+
 inline void record_start_event(ep_stats_t *application, ep_event_t event) {
 	if (application != NULL) {
 		application->start_time = get_current_time();
@@ -200,11 +212,13 @@ asmlinkage long sys_list_ep_apps(int is_stats) {
 					sprintf(&str[len],
 						"O%-2d:%lu, ", j, ep_statistics[i].orders[j]);
 				}
-				pr_err("\t\tTotal Kernel Allocation: %lu (B), %lu (KB), %lu (MB)\n with PAGE_SIZE = %lu",
+				pr_err("\t\tOrder: %s\n", str);
+				pr_err("\t\tTotal Kernel Allocation: %lu (B), %lu (KB), %lu (MB) with PAGE_SIZE = %lu",
 					(total_allocated), (total_allocated / 1024),
 					(total_allocated / (1024 * 1024)), PAGE_SIZE);
-
-				pr_err("\t\tOrder: %s\n", str);
+				pr_err("\t\tUser Space Requested: %lu (B), %lu (KB), %lu (MB)\n",
+					ep_statistics[i].user_mem_req, ep_statistics[i].user_mem_req / 1024,
+					ep_statistics[i].user_mem_req / (1024 * 1024));
 			}
 		}
 	} 

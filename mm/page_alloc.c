@@ -1573,6 +1573,7 @@ again:
         if ( current->mm && current->mm->apriori_paging_en == 1 ) {
             profile_hist_alloc_order[order]++;
         }
+
 		if (0 && enable_alloc_overhead_stats) {
 			record_alloc_event(indexof_process_stats(current->comm),
 				EP_ALLOC_ORDER_EVENT, order);

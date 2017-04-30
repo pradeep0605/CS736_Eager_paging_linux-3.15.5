@@ -23,7 +23,7 @@
  * This number indicates the time neded to do a context switch from user space
  * to kernel space and back.
  */ 
-#define CTXT_SWTCH_TIME (1410)
+#define CTXT_SWTCH_TIME (1500)
 
 enum ep_register_type {FOR_EAGER_PAGING = 0,
 					   FOR_STATISTICS = 1};
@@ -34,6 +34,7 @@ typedef enum event_type { EP_MMAP_EVENT,
 							EP_PGFAULT_MINOR_EVENT,
 							EP_PGFAULT_MAJOR_EVENT,
 							EP_ALLOC_ORDER_EVENT,
+							EP_ALLOC_REQ_FROM_USR_SPACE,
 							EP_MAX_EVENT
 }  ep_event_t;
 
@@ -52,6 +53,7 @@ typedef struct eager_paging_statistics {
 	unsigned long counters[EP_MAX_EVENT];
 	unsigned long timers[EP_MAX_EVENT];
 	unsigned long orders[MAX_ORDER + 1];
+	unsigned long user_mem_req;
 } ep_stats_t;
 
 

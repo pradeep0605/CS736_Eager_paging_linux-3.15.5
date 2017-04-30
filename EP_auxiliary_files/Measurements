@@ -265,5 +265,99 @@ Eager Paging:
 			 Memap Time      : 0          
 			 Total Time      : 5037918    
 
+========================================================================================================================
+test.out allocate and access entire memory
+
+test.out----------------------------#
+
+         Kernel Entry    : 1823       
+         Kernel Time     : 102090546  
+         PGFLT Count     : 1809       
+         PGFLT Minor     : 1809       
+         PGFLT Major     : 0          
+         PGFLT Time      : 102038833  
+         PGFLT Minor Time: 102038833  
+         PGFLT Major Time: 0          
+         Mmap Count      : 14         
+         Mmap Time       : 51713      
+         Mremap Count    : 0          
+         Memap Time      : 0          
+         Total Time      : 104660976  
+         Total Kernel Allocation: 911310848 (B), 889952 (KB), 869 (MB)
+ with PAGE_SIZE = 4096
+         Order: O0 :3352, O1 :0, O2 :0, O3 :0, O4 :0, O5 :0, O6 :0, O7 :0, O8 :0,
+         O9 :428, 
+
+
+
+test.out----------------------------#
+
+         Kernel Entry    : 50         
+         Kernel Time     : 88357871   
+         PGFLT Count     : 36         
+         PGFLT Minor     : 36         
+         PGFLT Major     : 0          
+         PGFLT Time      : 124276     
+         PGFLT Minor Time: 124276     
+         PGFLT Major Time: 0          
+         Mmap Count      : 14         
+         Mmap Time       : 88233595   
+         Mremap Count    : 0          
+         Memap Time      : 0          
+         Total Time      : 88428371   
+         Total Kernel Allocation: 912388096 (B), 891004 (KB), 870 (MB)
+ with PAGE_SIZE = 4096
+         Order: O0 :459, O1 :2, O2 :4, O3 :4, O4 :2, O5 :8, O6 :4, O7 :4, O8 :4, 
+         O9 :6, O10:4, O11:0, O12:0, O13:2, O14:0, O15:2, O16:2, 
+
+
+========================================================================================================================
+
+========================================================================================================================
+test.out allocate and do not access entire memory
+
+test.out----------------------------#
+
+         Kernel Entry    : 69         
+         Kernel Time     : 642481     
+         PGFLT Count     : 55         
+         PGFLT Minor     : 55         
+         PGFLT Major     : 0          
+         PGFLT Time      : 213903     
+         PGFLT Minor Time: 213903     
+         PGFLT Major Time: 0          
+         Mmap Count      : 14         
+         Mmap Time       : 428578     
+         Mremap Count    : 0          
+         Memap Time      : 0          
+         Total Time      : 739771     
+         Total Kernel Allocation: 184320 (B), 180 (KB), 0 (MB)
+ with PAGE_SIZE = 4096
+         Order: O0 :45, 
+
+test.out----------------------------#
+
+         Kernel Entry    : 50
+         Kernel Time     : 292051139
+         PGFLT Count     : 36
+         PGFLT Minor     : 36
+         PGFLT Major     : 0
+         PGFLT Time      : 117690
+         PGFLT Minor Time: 117690
+         PGFLT Major Time: 0
+         Mmap Count      : 14
+         Mmap Time       : 291933449
+         Mremap Count    : 0
+         Memap Time      : 0
+         Total Time      : 292121639
+         Total Kernel Allocation: 912261120 (B), 890880 (KB), 870 (MB)
+ with PAGE_SIZE = 4096
+         Order: O0 :428, O1 :2, O2 :4, O3 :4, O4 :2, O5 :8, O6 :4, O7 :8, O8 :2,
+         O9 :6, O10:4, O11:0, O12:0, O13:2, O14:0, O15:2, O16:2,
+
+
+========================================================================================================================
+
+
 
 

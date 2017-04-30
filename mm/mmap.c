@@ -268,6 +268,11 @@ SYSCALL_DEFINE1(brk, unsigned long, brk)
 	bool populate = 0;
 	unsigned long apriori_flag = 0;
 
+	if (enable_alloc_overhead_stats) {
+		record_alloc_event(indexof_process_stats(current->comm),
+			EP_ALLOC_REQ_FROM_USR_SPACE, brk);
+	}
+
 	down_write(&mm->mmap_sem);
 
 #ifdef CONFIG_COMPAT_BRK
@@ -1446,6 +1451,11 @@ SYSCALL_DEFINE6(mmap_pgoff, unsigned long, addr, unsigned long, len,
 
 	stats = indexof_process_stats(current->comm);
 	record_start_event(stats, EP_MMAP_EVENT);
+	
+	if (enable_alloc_overhead_stats) {
+		record_alloc_event(indexof_process_stats(current->comm),
+			EP_ALLOC_REQ_FROM_USR_SPACE, len);
+	}
 
 	if (!(flags & MAP_ANONYMOUS)) {
 		audit_mmap_fd(fd, flags);

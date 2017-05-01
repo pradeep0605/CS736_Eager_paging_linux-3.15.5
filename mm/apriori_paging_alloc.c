@@ -1,5 +1,7 @@
 #include <linux/apriori_paging_alloc.h>
 #include <linux/syscalls.h>
+#include <linux/semaphore.h>
+#include <linux/mutex.h>
 
 /*
  * !!_AprioriPaging_!!
@@ -26,7 +28,10 @@ unsigned char enable_prints;
 unsigned char enable_stats;
 unsigned char enable_alloc_overhead_stats;
 
+DEFINE_MUTEX(ep_mutex);
+
 ep_stats_t* indexof_process_stats(const char* proc_name);
+char sem_not_initialized;
 
 inline unsigned long get_current_time(void) {
 	unsigned long int time = 0;
@@ -40,6 +45,7 @@ inline unsigned long get_current_time(void) {
 
 inline void record_alloc_event(ep_stats_t *application, ep_event_t event,
 	unsigned long order) {
+	mutex_lock(&ep_mutex);
 	switch(event) {
 		case EP_ALLOC_ORDER_EVENT:
 			if (application) {
@@ -54,20 +60,24 @@ inline void record_alloc_event(ep_stats_t *application, ep_event_t event,
 		default:
 			break;
 	}
+	mutex_unlock(&ep_mutex);
 }
 
 inline void record_start_event(ep_stats_t *application, ep_event_t event) {
 	if (application != NULL) {
+		mutex_lock(&ep_mutex);
 		application->start_time = get_current_time();
 		application->kernel_entry++;
 		
 		if (event < EP_MAX_EVENT) {
 			application->counters[event]++;
 		}
+		mutex_unlock(&ep_mutex);
 	}
 }
 
 inline void record_end_event(ep_stats_t *application, ep_event_t event) {
+	mutex_lock(&ep_mutex);
 	if (application != NULL) {
 		application->end_time = get_current_time();
 		application->kernel_time += (application->end_time - application->start_time);
@@ -76,32 +86,41 @@ inline void record_end_event(ep_stats_t *application, ep_event_t event) {
 				(application->end_time - application->start_time); 
 		}	
 	}
+	mutex_unlock(&ep_mutex);
 }
 
 inline void incr_pgfault_count(ep_stats_t *application) {
+	mutex_lock(&ep_mutex);
 	if (application != NULL) {
 		application->counters[EP_PGFAULT_EVENT]++;
 	}
+	mutex_unlock(&ep_mutex);
 }
 
 inline void incr_mmap_count(ep_stats_t *application) {
+	mutex_lock(&ep_mutex);
 	if (application != NULL) {
 		application->counters[EP_MMAP_EVENT]++;
 	}
+	mutex_unlock(&ep_mutex);
 }
 
 inline void incr_mremap_count(ep_stats_t *application) {
+	mutex_lock(&ep_mutex);
 	if (application != NULL) {
 		application->counters[EP_MREMAP_EVENT]++;
 	}
+	mutex_unlock(&ep_mutex);
 }
 
 inline void dec_event_counter(ep_stats_t *application, ep_event_t event) {
+	mutex_lock(&ep_mutex);
 	if (application != NULL && event < EP_MAX_EVENT) {
 		if (application->counters[event] > 0) {
 			application->counters[event]--;
 		}
 	}
+	mutex_unlock(&ep_mutex);
 }
 int indexof_apriori_paged_process(const char* proc_name);
 
@@ -161,6 +180,7 @@ asmlinkage long sys_list_ep_apps(int is_stats) {
 	int len = 0;
 	unsigned long total_allocated = 0;
 	
+	mutex_lock(&ep_mutex);
 	if (is_stats == FOR_EAGER_PAGING) {
 		pr_err(" =================== Listing all Eager Paging Enabled"
 			" Applications =========================\n");
@@ -173,6 +193,8 @@ asmlinkage long sys_list_ep_apps(int is_stats) {
 		pr_err(" =================== Listing all Statistics Enabled"
 			" Applications =========================\n");
 		for (i = 0; i < CONFIG_NR_CPUS; ++i) {
+			total_allocated = 0;
+			str[0]= '\0';
 			if (ep_statistics[i].name[0] != '\0') {
 				pr_err("%s----------------------------#\n", ep_statistics[i].name);
 				pr_err(
@@ -205,7 +227,7 @@ asmlinkage long sys_list_ep_apps(int is_stats) {
 				(ep_statistics[i].kernel_entry * CTXT_SWTCH_TIME)));
 				
 				k = EP_MAX_ORDER;
-				while (k >= 0 && ep_statistics[i].orders[k] == 0) { k--;}
+			while (k >= 0 && ep_statistics[i].orders[k] == 0) { k--;}
 				
 				for (j = 0; j <= k; ++j) {
 					len = strlen(str);
@@ -213,7 +235,7 @@ asmlinkage long sys_list_ep_apps(int is_stats) {
 					(ep_statistics[i].orders[j] * (PAGE_SIZE << j));
 
 					if (j == 9) {	/* Print things in the next line */
-						sprintf(&str[len], "\n\t\t");
+						sprintf(&str[len], "\n\t\t\t");
 						len = strlen(str);
 					}
 					sprintf(&str[len],
@@ -230,6 +252,7 @@ asmlinkage long sys_list_ep_apps(int is_stats) {
 		}
 	} 
 
+	mutex_unlock(&ep_mutex);
 	return 0xdeadbeef;
 }
 
@@ -238,6 +261,8 @@ is_stats) {
 	int i = 0;
 	pr_err("\n======================Inside system calls (%s)"
 		"============================", __func__);
+	
+	mutex_lock(&ep_mutex);
 
 	if (is_stats == FOR_EAGER_PAGING) {
 		if (process_name == NULL) {
@@ -299,6 +324,8 @@ is_stats) {
 		}
 	}
 
+	mutex_unlock(&ep_mutex);
+
 	if (is_stats > 1) {
 		sys_list_ep_apps(1);
 	} else {
@@ -321,6 +348,7 @@ int ep_register_process(const char *proc_name, int option) {
 	printk(KERN_ALERT "In function %s with proc_name = %s and option = %d\n", 
 		__func__, proc_name, option);
 	
+	mutex_lock(&ep_mutex);
 	/* Enable collection of statistics for the process `proc_name` */
 	if (option == FOR_STATISTICS) {
 		i = 0;
@@ -361,6 +389,7 @@ int ep_register_process(const char *proc_name, int option) {
 #endif 
 	/* avoid compiler warings */
 	ret = ret;
+	mutex_unlock(&ep_mutex);
 	return 0xdeadbeef;
 }
 

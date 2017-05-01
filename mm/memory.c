@@ -2244,7 +2244,7 @@ long __get_user_pages(struct task_struct *tsk, struct mm_struct *mm,
 					if (apriori_flag != 2) {
 						fault_flags |= FAULT_FLAG_ALLOW_RETRY;
 					}
-                		}
+				}
 				if (foll_flags & FOLL_NOWAIT)
 					fault_flags |= (FAULT_FLAG_ALLOW_RETRY | FAULT_FLAG_RETRY_NOWAIT);
 

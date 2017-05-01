@@ -25,6 +25,7 @@
  */ 
 #define CTXT_SWTCH_TIME (1500)
 
+#define EP_MAX_ORDER 21
 enum ep_register_type {FOR_EAGER_PAGING = 0,
 					   FOR_STATISTICS = 1};
 
@@ -52,7 +53,7 @@ typedef struct eager_paging_statistics {
 	/* Coutners for all the events */
 	unsigned long counters[EP_MAX_EVENT];
 	unsigned long timers[EP_MAX_EVENT];
-	unsigned long orders[MAX_ORDER + 1];
+	unsigned long orders[EP_MAX_ORDER + 1];
 	unsigned long user_mem_req;
 } ep_stats_t;
 
@@ -73,7 +74,7 @@ inline void incr_mmap_count(ep_stats_t *application);
 int ep_register_process(const char *proc_name, int option);
 ep_stats_t* indexof_process_stats(const char* proc_name);
 inline void record_alloc_event(ep_stats_t *application, ep_event_t event,
-	int order);
+	unsigned long order);
 inline void dec_event_counter(ep_stats_t *application, ep_event_t event);
 
 #define ep_print(...) if (enable_prints) \

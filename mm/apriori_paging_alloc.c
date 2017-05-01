@@ -39,7 +39,7 @@ inline unsigned long get_current_time(void) {
 }
 
 inline void record_alloc_event(ep_stats_t *application, ep_event_t event,
-	int order) {
+	unsigned long order) {
 	switch(event) {
 		case EP_ALLOC_ORDER_EVENT:
 			if (application) {
@@ -157,7 +157,7 @@ asmlinkage long sys_ep_control_syscall(int val) {
 // asmlinkage long sys_list_ep_apps(void) {
 asmlinkage long sys_list_ep_apps(int is_stats) {
 	int i = 0, j = 0, k = 0;
-	char str[1000] = {0};
+	char str[2000] = {0};
 	int len = 0;
 	unsigned long total_allocated = 0;
 	
@@ -204,13 +204,13 @@ asmlinkage long sys_list_ep_apps(int is_stats) {
 				(ep_statistics[i].kernel_time + 
 				(ep_statistics[i].kernel_entry * CTXT_SWTCH_TIME)));
 				
-				k = MAX_ORDER;
+				k = EP_MAX_ORDER;
 				while (k >= 0 && ep_statistics[i].orders[k] == 0) { k--;}
 				
 				for (j = 0; j <= k; ++j) {
 					len = strlen(str);
 					total_allocated +=
-					(ep_statistics[i].orders[j] * (1 << j) * PAGE_SIZE);
+					(ep_statistics[i].orders[j] * (PAGE_SIZE << j));
 
 					if (j == 9) {	/* Print things in the next line */
 						sprintf(&str[len], "\n\t\t");

@@ -268,10 +268,6 @@ SYSCALL_DEFINE1(brk, unsigned long, brk)
 	bool populate = 0;
 	unsigned long apriori_flag = 0;
 
-	if (enable_alloc_overhead_stats) {
-		record_alloc_event(indexof_process_stats(current->comm),
-			EP_ALLOC_REQ_FROM_USR_SPACE, brk);
-	}
 
 	down_write(&mm->mmap_sem);
 
@@ -322,6 +318,10 @@ SYSCALL_DEFINE1(brk, unsigned long, brk)
 	if (do_brk(oldbrk, newbrk-oldbrk) != oldbrk)
 		goto out;
 
+	if (enable_alloc_overhead_stats) {
+		record_alloc_event(indexof_process_stats(current->comm),
+			EP_ALLOC_REQ_FROM_USR_SPACE, newbrk - oldbrk);
+	}
 set_brk:
 	mm->brk = brk;
 	populate = newbrk > oldbrk && (mm->def_flags & VM_LOCKED) != 0;

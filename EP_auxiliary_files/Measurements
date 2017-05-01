@@ -94,7 +94,7 @@ test.out----------------------------#
          User Space Requested: 470380082 (B), 459355 (KB), 448 (MB)
 
 =========================================================================================================
-Work load A, B, C, D, E, F:
+Redis Work load A, B, C, D, E, F:
 
 Redis server seems to be really smart. Once it allocates its memory, it goes through 19MB of data to make sure
 that these pages are allocated so that we do not enter kernel for allocation while running workloads (Smart redis is).

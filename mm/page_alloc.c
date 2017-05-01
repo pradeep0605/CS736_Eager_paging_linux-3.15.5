@@ -952,11 +952,14 @@ struct page *__rmqueue_smallest(struct zone *zone, unsigned int order,
 			// from memory-mapped files
 			profile_hist_alloc_order[order]++;
 		}
-
-		if (enable_alloc_overhead_stats) {
+		
+		/*
+		if (0 && enable_alloc_overhead_stats) {
 			record_alloc_event(indexof_process_stats(current->comm),
 				EP_ALLOC_ORDER_EVENT, order);
 		}
+		*/
+
 		page = list_entry(area->free_list[migratetype].next,
 							struct page, lru);
 		list_del(&page->lru);
@@ -1193,11 +1196,13 @@ retry_reserve:
 			goto retry_reserve;
 		}
 	}
-
+	
+	/*
 	if (0 && enable_alloc_overhead_stats) {
 		record_alloc_event(indexof_process_stats(current->comm),
 			EP_ALLOC_ORDER_EVENT, order);
 	}
+	*/
 
 	trace_mm_page_alloc_zone_locked(page, order, migratetype);
 	return page;
@@ -1574,10 +1579,12 @@ again:
             profile_hist_alloc_order[order]++;
         }
 
+		/*
 		if (0 && enable_alloc_overhead_stats) {
 			record_alloc_event(indexof_process_stats(current->comm),
 				EP_ALLOC_ORDER_EVENT, order);
 		}
+		*/
 
 		local_irq_save(flags);
 		pcp = &this_cpu_ptr(zone->pageset)->pcp;
@@ -1603,10 +1610,12 @@ again:
             profile_hist_alloc_order[order]++;
         }
 
+		/*
 		if (0 && enable_alloc_overhead_stats) {
 			record_alloc_event(indexof_process_stats(current->comm),
 				EP_ALLOC_ORDER_EVENT, order);
 		}
+		*/
 
 		if (unlikely(gfp_flags & __GFP_NOFAIL)) {
 			/*
@@ -2825,7 +2834,7 @@ retry:
 				preferred_zone, migratetype);
 	}
 	
-	if (1 && enable_alloc_overhead_stats) {
+	if (enable_alloc_overhead_stats) {
 		record_alloc_event(indexof_process_stats(current->comm),
 			EP_ALLOC_ORDER_EVENT, order);
 	}

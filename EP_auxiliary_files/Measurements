@@ -378,5 +378,339 @@ Compilation of mm/*.c (memory management files)
 			 Order: O0 :2356, O1 :0, O2 :110, O3 :0, O4 :3, O5 :55, 
 			 Total Kernel Allocation: 18857984 (B), 18416 (KB), 17 (MB) with PAGE_SIZE = 4096
 			 User Space Requested: 6004620270 (B), 5863886 (KB), 5726 (MB)
+--------------------------------------------------------------------------------------------------------------
+PARSEC 
+	simmedium
+		 dedup----------------------------#
+ 
+			Kernel Entry    : 172322     
+			Kernel Time     : 529786384  
+			PGFLT Count     : 172291     
+			PGFLT Minor     : 172289     
+			PGFLT Major     : 0          
+			PGFLT Time      : 528878449  
+			PGFLT Minor Time: 528877758  
+			PGFLT Major Time: 0          
+			Mmap Count      : 35         
+			Mmap Time       : 500796     
+			Mremap Count    : 2          
+			Memap Time      : 407830     
+			Total Time      : 788269384  
+			Order: O0 :198624, O1 :4, O2 :10, O3 :0, O4 :0, O5 :0, O6 :0, O7 :0, O8 :0, 
+			O9 :64, 
+			Total Kernel Allocation: 947978240 (B), 925760 (KB), 904 (MB) with PAGE_SIZE = 4096
+			User Space Requested: 916475163 (B), 894995 (KB), 874 (MB)
+
+	simmedium: Eager Paging
+		 dedup----------------------------#
+			Kernel Entry    : 169690     
+			Kernel Time     : 908979551  
+			PGFLT Count     : 169657     
+			PGFLT Minor     : 169656     
+			PGFLT Major     : 1          
+			PGFLT Time      : 339391573  
+			PGFLT Minor Time: 339389741  
+			PGFLT Major Time: 0          
+			Mmap Count      : 34         
+			Mmap Time       : 557094958  
+			Mremap Count    : 2          
+			Memap Time      : 12494468   
+			Total Time      : 1163514551 
+			Order: O0 :194802, O1 :4, O2 :16, O3 :0, O4 :2, O5 :6, O6 :4, O7 :8, O8 :2, 
+			O9 :4, O10:2, O11:20, O12:2, O13:0, O14:0, O15:4, 
+			Total Kernel Allocation: 1561436160 (B), 1524840 (KB), 1489 (MB) with PAGE_SIZE = 4096
+				User Space Requested: 765267227 (B), 747331 (KB), 729 (MB)
+	simlarge:
+		 dedup----------------------------#
+	 
+			Kernel Entry    : 967959     
+			Kernel Time     : 3113948516 
+			PGFLT Count     : 967956     
+			PGFLT Minor     : 967945     
+			PGFLT Major     : 1          
+			PGFLT Time      : 3112938542 
+			PGFLT Minor Time: 3112991986 
+			PGFLT Major Time: 0          
+			Mmap Count      : 36         
+			Mmap Time       : 203085     
+			Mremap Count    : 2          
+			Memap Time      : 754537     
+			Total Time      : 4565887016 
+			Order: O0 :1065697, O1 :46, O2 :10, O3 :0, O4 :0, O5 :0, O6 :0, O7 :0, O8 :0, 
+			O9 :372, 
+			Total Kernel Allocation: 5145776128 (B), 5025172 (KB), 4907 (MB) with PAGE_SIZE = 4096
+			User Space Requested: 1093709083 (B), 1068075 (KB), 1043 (MB)
+	simlarge: Eager Paging
+	 dedup----------------------------#
+ 
+			Kernel Entry    : 967776     
+			Kernel Time     : 4167117001 
+			PGFLT Count     : 967756     
+			PGFLT Minor     : 967751     
+			PGFLT Major     : 0          
+			PGFLT Time      : 3107353556 
+			PGFLT Minor Time: 3107375687 
+			PGFLT Major Time: 0          
+			Mmap Count      : 35         
+			Mmap Time       : 1048584283 
+			Mremap Count    : 2          
+			Memap Time      : 11157031   
+			Total Time      : 5618781001 
+			Order: O0 :1063688, O1 :26, O2 :16, O3 :2, O4 :4, O5 :4, O6 :6, O7 :8, O8 :6, 
+			O9 :2, O10:0, O11:20, O12:2, O13:2, O14:0, O15:6, 
+			Total Kernel Allocation: 5448187904 (B), 5320496 (KB), 5195 (MB) with PAGE_SIZE = 4096
+			User Space Requested: 1096129819 (B), 1070439 (KB), 1045 (MB)	
+
+	simmedium:
+	 canneal----------------------------#
+ 
+			Kernel Entry    : 16496      
+			Kernel Time     : 276081638  
+			PGFLT Count     : 16472      
+			PGFLT Minor     : 16472      
+			PGFLT Major     : 0          
+			PGFLT Time      : 275970299  
+			PGFLT Minor Time: 275970299  
+			PGFLT Major Time: 0          
+			Mmap Count      : 24         
+			Mmap Time       : 111339     
+			Mremap Count    : 0          
+			Memap Time      : 0          
+			Total Time      : 300825638  
+			Order: O0 :32702, O1 :0, O2 :2, O3 :0, O4 :0, O5 :0, O6 :0, O7 :0, O8 :0, 
+			O9 :16, 
+			Total Kernel Allocation: 167534592 (B), 163608 (KB), 159 (MB) with PAGE_SIZE = 4096
+			User Space Requested: 24163033971 (B), 23596712 (KB), 23043 (MB)
+
+	simmedium: Eager Paging
+
+	 canneal----------------------------#
+ 
+			Kernel Entry    : 104        
+			Kernel Time     : 9376656    
+			PGFLT Count     : 80         
+			PGFLT Minor     : 80         
+			PGFLT Major     : 0          
+			PGFLT Time      : 1587520    
+			PGFLT Minor Time: 1587520    
+			PGFLT Major Time: 0          
+			Mmap Count      : 24         
+			Mmap Time       : 7789136    
+			Mremap Count    : 0          
+			Memap Time      : 0          
+			Total Time      : 9532656    
+			Order: O0 :1078, O1 :8, O2 :10, O3 :0, O4 :4, O5 :956, O6 :2, O7 :0, O8 :0, 
+			O9 :2, O10:0, O11:2, O12:2, 
+			Total Kernel Allocation: 185262080 (B), 180920 (KB), 176 (MB) with PAGE_SIZE = 4096
+			User Space Requested: 33869472627 (B), 33075656 (KB), 32300 (MB)	
+
+	simlarge:
+	 canneal----------------------------#
+ 
+			Kernel Entry    : 32099      
+			Kernel Time     : 447836570  
+			PGFLT Count     : 32075      
+			PGFLT Minor     : 32075      
+			PGFLT Major     : 0          
+			PGFLT Time      : 447717383  
+			PGFLT Minor Time: 447717383  
+			PGFLT Major Time: 0          
+			Mmap Count      : 24         
+			Mmap Time       : 119187     
+			Mremap Count    : 0          
+			Memap Time      : 0          
+			Total Time      : 495985070  
+			Order: O0 :63866, O1 :0, O2 :2, O3 :0, O4 :0, O5 :0, O6 :0, O7 :0, O8 :0, 
+			O9 :32, 
+			Total Kernel Allocation: 328736768 (B), 321032 (KB), 313 (MB) with PAGE_SIZE = 4096
+			User Space Requested: 73757664115 (B), 72028968 (KB), 70340 (MB)
+
+	simlarge: Eager Paging
+	 canneal----------------------------#
+ 
+			Kernel Entry    : 106        
+			Kernel Time     : 9893395    
+			PGFLT Count     : 82         
+			PGFLT Minor     : 82         
+			PGFLT Major     : 0          
+			PGFLT Time      : 931800     
+			PGFLT Minor Time: 931800     
+			PGFLT Major Time: 0          
+			Mmap Count      : 24         
+			Mmap Time       : 8961595    
+			Mremap Count    : 0          
+			Memap Time      : 0          
+			Total Time      : 10052395   
+			Order: O0 :2089, O1 :20, O2 :10, O3 :0, O4 :4, O5 :1900, O6 :2, O7 :0, O8 :0, 
+			O9 :2, O10:0, O11:2, O12:0, O13:2, 
+			Total Kernel Allocation: 346787840 (B), 338660 (KB), 330 (MB) with PAGE_SIZE = 4096
+			User Space Requested: 84824236915 (B), 82836168 (KB), 80894 (MB)
+
+	simmedium:
+ 		ferret----------------------------#
+ 
+			Kernel Entry    : 13105      
+			Kernel Time     : 80700530   
+			PGFLT Count     : 12999      
+			PGFLT Minor     : 12999      
+			PGFLT Major     : 0          
+			PGFLT Time      : 79067236   
+			PGFLT Minor Time: 79067236   
+			PGFLT Major Time: 0          
+			Mmap Count      : 104        
+			Mmap Time       : 1633294    
+			Mremap Count    : 0          
+			Memap Time      : 0          
+			Total Time      : 100358030  
+			Order: O0 :24977, O1 :0, O2 :12, O3 :0, O4 :0, O5 :0, O6 :0, O7 :0, O8 :0, 
+			O9 :10, 
+			Total Kernel Allocation: 123473920 (B), 120580 (KB), 117 (MB) with PAGE_SIZE = 4096
+			User Space Requested: 1533599003 (B), 1497655 (KB), 1462 (MB)
 
 
+	simmedium: Eager Paging
+		 ferret----------------------------#
+		 
+			Kernel Entry    : 10204      
+			Kernel Time     : 79623518   
+			PGFLT Count     : 10101      
+			PGFLT Minor     : 10101      
+			PGFLT Major     : 1          
+			PGFLT Time      : 57539473   
+			PGFLT Minor Time: 57542591   
+			PGFLT Major Time: 0          
+			Mmap Count      : 104        
+			Mmap Time       : 22080927   
+			Mremap Count    : 0          
+			Memap Time      : 0          
+			Total Time      : 94929518   
+			Order: O0 :15709, O1 :20, O2 :30, O3 :16, O4 :6, O5 :116, O6 :10, O7 :6, O8 :2, 
+			O9 :2, O10:0, O11:14, 
+			Total Kernel Allocation: 210620416 (B), 205684 (KB), 200 (MB) with PAGE_SIZE = 4096
+			User Space Requested: 2286243099 (B), 2232659 (KB), 2180 (MB)
+
+	simlarge:
+	 ferret----------------------------#
+ 
+			Kernel Entry    : 17557      
+			Kernel Time     : 154921382  
+			PGFLT Count     : 17263      
+			PGFLT Minor     : 17263      
+			PGFLT Major     : 0          
+			PGFLT Time      : 119978271  
+			PGFLT Minor Time: 119978271  
+			PGFLT Major Time: 0          
+			Mmap Count      : 296        
+			Mmap Time       : 34943111   
+			Mremap Count    : 0          
+			Memap Time      : 0          
+			Total Time      : 181256882  
+			Order: O0 :20129, O1 :46, O2 :36, O3 :20, O4 :130, O5 :208, O6 :14, O7 :12, O8 :4, 
+			O9 :0, O10:2, O11:14, O12:2, 
+			Total Kernel Allocation: 293392384 (B), 286516 (KB), 279 (MB) with PAGE_SIZE = 4096
+			User Space Requested: 4395216155 (B), 4292203 (KB), 4191 (MB)
+
+	simlarge: Eager Paging
+	 ferret----------------------------#
+ 
+			Kernel Entry    : 17497      
+			Kernel Time     : 151405569  
+			PGFLT Count     : 17201      
+			PGFLT Minor     : 17201      
+			PGFLT Major     : 0          
+			PGFLT Time      : 117475346  
+			PGFLT Minor Time: 117478456  
+			PGFLT Major Time: 0          
+			Mmap Count      : 296        
+			Mmap Time       : 33927113   
+			Mremap Count    : 0          
+			Memap Time      : 0          
+			Total Time      : 177651069  
+			Order: O0 :19824, O1 :46, O2 :36, O3 :20, O4 :22, O5 :262, O6 :14, O7 :12, O8 :4, 
+			O9 :0, O10:2, O11:14, O12:2, 
+			Total Kernel Allocation: 292143104 (B), 285296 (KB), 278 (MB) with PAGE_SIZE = 4096
+			User Space Requested: 6460136731 (B), 6308727 (KB), 6160 (MB)
+
+	simmedium:
+	fluidanimate----------------------------#
+ 
+			Kernel Entry    : 2733       
+			Kernel Time     : 24277531   
+			PGFLT Count     : 2704       
+			PGFLT Minor     : 2704       
+			PGFLT Major     : 0          
+			PGFLT Time      : 23546739   
+			PGFLT Minor Time: 23546739   
+			PGFLT Major Time: 0          
+			Mmap Count      : 29         
+			Mmap Time       : 730792     
+			Mremap Count    : 0          
+			Memap Time      : 0          
+			Total Time      : 28377031   
+			Order: O0 :7020, O1 :2, O2 :2, O3 :0, O4 :0, O5 :0, O6 :0, O7 :0, O8 :0, 
+			O9 :94, 
+			Total Kernel Allocation: 225935360 (B), 220640 (KB), 215 (MB) with PAGE_SIZE = 4096
+			User Space Requested: 560022387 (B), 546896 (KB), 534 (MB)
+	simmedium: Eager Paging
+	fluidanimate----------------------------#
+ 
+			Kernel Entry    : 107        
+			Kernel Time     : 69046567   
+			PGFLT Count     : 78         
+			PGFLT Minor     : 78         
+			PGFLT Major     : 0          
+			PGFLT Time      : 514943     
+			PGFLT Minor Time: 514943     
+			PGFLT Major Time: 0          
+			Mmap Count      : 29         
+			Mmap Time       : 68531624   
+			Mremap Count    : 0          
+			Memap Time      : 0          
+			Total Time      : 69207067   
+			Order: O0 :2140, O1 :12, O2 :12, O3 :10, O4 :8, O5 :44, O6 :10, O7 :2, O8 :6, 
+			O9 :4, O10:6, O11:2, O12:2, O13:4, 
+			Total Kernel Allocation: 243744768 (B), 238032 (KB), 232 (MB) with PAGE_SIZE = 4096
+			User Space Requested: 320418675 (B), 312908 (KB), 305 (MB)
+
+	
+	simlarge:
+	 fluidanimate----------------------------#
+ 
+			Kernel Entry    : 3924       
+			Kernel Time     : 147740394  
+			PGFLT Count     : 3894       
+			PGFLT Minor     : 3894       
+			PGFLT Major     : 0          
+			PGFLT Time      : 147631893  
+			PGFLT Minor Time: 147631893  
+			PGFLT Major Time: 0          
+			Mmap Count      : 30         
+			Mmap Time       : 108501     
+			Mremap Count    : 0          
+			Memap Time      : 0          
+			Total Time      : 153626394  
+			Order: O0 :13082, O1 :4, O2 :2, O3 :0, O4 :0, O5 :0, O6 :0, O7 :0, O8 :0, 
+			O9 :292, 
+			Total Kernel Allocation: 666017792 (B), 650408 (KB), 635 (MB) with PAGE_SIZE = 4096
+			User Space Requested: 1928983411 (B), 1883772 (KB), 1839 (MB)
+
+	simlarge: Eager Paging
+		fluidanimate----------------------------#
+ 
+			Kernel Entry    : 110        
+			Kernel Time     : 108364889  
+			PGFLT Count     : 80         
+			PGFLT Minor     : 80         
+			PGFLT Major     : 0          
+			PGFLT Time      : 1826815    
+			PGFLT Minor Time: 1826815    
+			PGFLT Major Time: 0          
+			Mmap Count      : 30         
+			Mmap Time       : 106538074  
+			Mremap Count    : 0          
+			Memap Time      : 0          
+			Total Time      : 108529889  
+			Order: O0 :5949, O1 :6, O2 :14, O3 :8, O4 :8, O5 :104, O6 :2, O7 :8, O8 :10, 
+			O9 :4, O10:0, O11:2, O12:4, O13:8, O14:4, 
+			Total Kernel Allocation: 683413504 (B), 667396 (KB), 651 (MB) with PAGE_SIZE = 4096
+			User Space Requested: 927269747 (B), 905536 (KB), 884 (MB)

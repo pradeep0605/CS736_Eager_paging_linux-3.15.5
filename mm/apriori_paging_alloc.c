@@ -27,6 +27,8 @@ unsigned char enable_dump_stack;
 unsigned char enable_prints;
 unsigned char enable_stats;
 unsigned char enable_alloc_overhead_stats;
+unsigned char disable_eager_on_child;
+unsigned char disable_stats_on_child;
 
 DEFINE_MUTEX(ep_mutex);
 
@@ -168,6 +170,22 @@ asmlinkage long sys_ep_control_syscall(int val) {
 		case -4:
 			pr_err("EP: Disabled alloc overheads stats");
 			enable_alloc_overhead_stats = 0;
+			break;
+		case 5:
+			pr_err("EP: Disabled eager paging for children\n");
+			disable_eager_on_child = 1;
+			break;
+		case -5:
+			pr_err("EP: Enabling eager paging for children\n");
+			disable_eager_on_child = 0;
+			break;
+		case 6:
+			pr_err("EP: Disabled stats for children\n");
+			disable_stats_on_child = 1;
+			break;
+		case -6:
+			pr_err("EP: Enabling stats for children\n");
+			disable_stats_on_child = 0;
 			break;
 	}
 	return 0;

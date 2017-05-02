@@ -64,6 +64,8 @@ extern unsigned char enable_dump_stack;
 extern unsigned char enable_prints;
 extern unsigned char enable_stats;
 extern unsigned char enable_alloc_overhead_stats;
+extern unsigned char disable_eager_on_child;
+extern unsigned char disable_stats_on_child;
 
 int is_process_of_apriori_paging(const char* proc_name);
 inline unsigned long get_current_time(void);

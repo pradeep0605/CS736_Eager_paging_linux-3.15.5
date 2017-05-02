@@ -71,6 +71,8 @@ int main(int argc, char **argv) {
 		printf("2) enabled prints (-2) for disabling \n");
 		printf("3) enabled stats (-3) disabling stats \n");
 		printf("4) enabled alloc overhead stats (-4) disabling\n");
+		printf("5) disable eager paging on child proces  (-4) enabling eager paging on child (default)\n");
+		printf("6) disable stats on child proces  (-4) enabling stats on child (default)\n");
 		printf("64) Empty Syscall for time calculation\n");
 		return 0;
 	}

@@ -1126,7 +1126,9 @@ void setup_new_exec(struct linux_binprm * bprm)
         if(current && current->real_parent && current->real_parent != current &&
 			current->real_parent->mm && current->real_parent->mm->apriori_paging_en)
         {
+			if (!disable_eager_on_child) {
                 current->mm->apriori_paging_en = 1;
+			}
         }
 
 		/* TeamRoot: Check if we need to enabled statistics for this process.
@@ -1134,7 +1136,9 @@ void setup_new_exec(struct linux_binprm * bprm)
 		if (indexof_process_stats(current->real_parent->comm) != NULL) {
 			/* Add only if the process's stats do not exist already */
 			if (indexof_process_stats(current->comm) == NULL) {
-				ep_register_process(current->comm, FOR_STATISTICS);
+				if (!disable_stats_on_child) {
+					ep_register_process(current->comm, FOR_STATISTICS);
+				}
 			}
 		}
        

@@ -900,5 +900,47 @@ Eager Paging:
  		Total Kernel Allocation: 171626496 (B), 167604 (KB), 163 (MB) with PAGE_SIZE = 4096
  		User Space Requested: 189870579 (B), 185420 (KB), 181 (MB)
 
-=====================================================================================
+====================================================================================
+Cassandra
 
+Demand Paging:
+cassandra----------------------------# 
+
+		Kernel Entry    : 6929       
+		Kernel Time     : 23926738   
+		PGFLT Count     : 6758       
+		PGFLT Minor     : 6758       
+		PGFLT Major     : 0          
+		PGFLT Time      : 20942179   
+		PGFLT Minor Time: 22289363   
+		PGFLT Major Time: 0          
+		Mmap Count      : 171        
+		Mmap Time       : 1637375    
+		Mremap Count    : 0          
+		Memap Time      : 0          
+		Total Time      : 34320238   
+		Order: O0 :5087, O1 :1, O2 :80, O3 :0, O4 :4, 
+		Total Kernel Allocation: 22417408 (B), 21892 (KB), 21 (MB) with PAGE_SIZE = 4096 
+		User Space Requested: 825557137 (B), 806208 (KB), 787 (MB)
+
+Eager Paging:
+ cassandra----------------------------# 
+ 
+ 		Kernel Entry    : 6335       
+ 		Kernel Time     : 26492551   
+ 		PGFLT Count     : 6164       
+ 		PGFLT Minor     : 6164       
+ 		PGFLT Major     : 0          
+ 		PGFLT Time      : 20670877   
+ 		PGFLT Minor Time: 22107661   
+ 		PGFLT Major Time: 0          
+ 		Mmap Count      : 171        
+ 		Mmap Time       : 4384890    
+ 		Mremap Count    : 0          
+ 		Memap Time      : 0          
+ 		Total Time      : 35995051   
+ 		Order: O0 :4493, O1 :0, O2 :84, O3 :0, O4 :6, O5 :19, 
+ 		Total Kernel Allocation: 22663168 (B), 22132 (KB), 21 (MB) with PAGE_SIZE = 4096 
+ 		User Space Requested: 825557137 (B), 806208 (KB), 787 (MB)
+
+=======================================================================

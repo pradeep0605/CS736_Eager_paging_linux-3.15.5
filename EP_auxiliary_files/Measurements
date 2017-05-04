@@ -34,23 +34,24 @@ Allocation but no access of memory:
 	EagerPaging:
 		test.out----------------------------#
 
-		 Kernel Entry    : 50         
-		 Kernel Time     : 172088445  
-		 PGFLT Count     : 36         
-		 PGFLT Minor     : 36         
+		 Kernel Entry    : 51         
+		 Kernel Time     : 86556414   
+		 PGFLT Count     : 37         
+		 PGFLT Minor     : 37         
 		 PGFLT Major     : 0          
-		 PGFLT Time      : 174871     
-		 PGFLT Minor Time: 174871     
+		 PGFLT Time      : 151585     
+		 PGFLT Minor Time: 151585     
 		 PGFLT Major Time: 0          
 		 Mmap Count      : 14         
-		 Mmap Time       : 171913574  
+		 Mmap Time       : 86404829   
 		 Mremap Count    : 0          
 		 Memap Time      : 0          
-		 Total Time      : 172163445  
-		 Order: O0 :273, O1 :1, O2 :2, O3 :2, O4 :1, O5 :4, O6 :2, O7 :2, O8 :8, 
-		 O9 :0, O10:2, O11:0, O12:0, O13:1, O14:0, O15:1, O16:1, 
-		 Total Kernel Allocation: 456372224 (B), 445676 (KB), 435 (MB) with PAGE_SIZE = 4096
+		 Total Time      : 86632914   
+		 Order: O0 :274, O1 :1, O2 :2, O3 :2, O4 :1, O5 :6, O6 :1, O7 :2, O8 :6, 
+		         O9 :1, O10:2, O11:0, O12:0, O13:1, O14:0, O15:1, O16:1, 
+		 Total Kernel Allocation: 456376320 (B), 445680 (KB), 435 (MB) with PAGE_SIZE = 4096
 		 User Space Requested: 459300402 (B), 448535 (KB), 438 (MB)
+
 
 =========================================================================================================
 Allocation with accessing entire allocated memory:
@@ -58,45 +59,45 @@ Allocation with accessing entire allocated memory:
 Demand Paging:
 	test.out----------------------------#
 
-		 Kernel Entry    : 1824       
-		 Kernel Time     : 55762834   
-		 PGFLT Count     : 1810       
-		 PGFLT Minor     : 1810       
+		 Kernel Entry    : 1823       
+		 Kernel Time     : 82071445   
+		 PGFLT Count     : 1809       
+		 PGFLT Minor     : 1809       
 		 PGFLT Major     : 0          
-		 PGFLT Time      : 55710419   
-		 PGFLT Minor Time: 55710419   
+		 PGFLT Time      : 81936396   
+		 PGFLT Minor Time: 81936396   
 		 PGFLT Major Time: 0          
 		 Mmap Count      : 14         
-		 Mmap Time       : 52415      
+		 Mmap Time       : 135049     
 		 Mremap Count    : 0          
 		 Memap Time      : 0          
-		 Total Time      : 58498834   
-		 Order: O0 :1805, O1 :0, O2 :0, O3 :0, O4 :0, O5 :0, O6 :0, O7 :0, O8 :0, 
-		 O9 :214, 
-		 Total Kernel Allocation: 456183808 (B), 445492 (KB), 435 (MB) with PAGE_SIZE = 4096
+		 Total Time      : 84,805,945   
+		 Order: O0 :1802, O1 :0, O2 :0, O3 :0, O4 :0, O5 :0, O6 :0, O7 :0, O8 :0, 
+		         O9 :214, 
+		 Total Kernel Allocation: 456171520 (B), 445480 (KB), 435 (MB) with PAGE_SIZE = 4096
 		 User Space Requested: 459300402 (B), 448535 (KB), 438 (MB)
-
 
 Eager Paging:
 	test.out----------------------------#
 
-		 Kernel Entry    : 50         
-		 Kernel Time     : 74576755   
-		 PGFLT Count     : 36         
-		 PGFLT Minor     : 36         
+		 Kernel Entry    : 51         
+		 Kernel Time     : 81653194   
+		 PGFLT Count     : 37         
+		 PGFLT Minor     : 37         
 		 PGFLT Major     : 0          
-		 PGFLT Time      : 106802     
-		 PGFLT Minor Time: 106802     
+		 PGFLT Time      : 159374     
+		 PGFLT Minor Time: 159374     
 		 PGFLT Major Time: 0          
 		 Mmap Count      : 14         
-		 Mmap Time       : 74469953   
+		 Mmap Time       : 81493820   
 		 Mremap Count    : 0          
 		 Memap Time      : 0          
-		 Total Time      : 74651755   
-		 Order: O0 :273, O1 :1, O2 :2, O3 :2, O4 :1, O5 :4, O6 :2, O7 :2, O8 :4, 
-		 O9 :2, O10:2, O11:0, O12:0, O13:1, O14:0, O15:1, O16:1, 
-		 Total Kernel Allocation: 456372224 (B), 445676 (KB), 435 (MB) with PAGE_SIZE = 4096
+		 Total Time      : 81,729,694   
+		 Order: O0 :272, O1 :1, O2 :2, O3 :2, O4 :1, O5 :4, O6 :2, O7 :2, O8 :2, 
+		         O9 :3, O10:2, O11:0, O12:0, O13:1, O14:0, O15:1, O16:1, 
+		 Total Kernel Allocation: 456368128 (B), 445672 (KB), 435 (MB) with PAGE_SIZE = 4096
 		 User Space Requested: 459300402 (B), 448535 (KB), 438 (MB)
+
 
 =========================================================================================================
 Redis Work load A, B, C, D, E, F:
@@ -719,48 +720,91 @@ PARSEC
 CPU 2006 SPEC
 perlbench
 
-Demand Paging:
+BZIP
+	Demand Paging:
+		bzip2_base.amd6----------------------------#
 
-perlbench_base.----------------------------#
+			 Kernel Entry    : 31940      
+			 Kernel Time     : 587521243  
+			 PGFLT Count     : 31822      
+			 PGFLT Minor     : 31822      
+			 PGFLT Time      : 586469430  
+			 PGFLT Minor Time: 586469430  
+			 PGFLT Major Time: 0          
+			 Mmap Count      : 118        
+			 Mmap Time       : 1051813    
+			 Mremap Count    : 0          
+			 Memap Time      : 0          
+			 Total Time      : 635,431,243  
+			 Order: O0 :31883, O1 :0, O2 :0, O3 :0, O4 :0, O5 :0, O6 :0, O7 :0, O8 :0, 
+				 O9 :1651, 
+			 Total Kernel Allocation: 3592990720 (B), 3508780 (KB), 3426 (MB) with PAGE_SIZE = 4096
+			 User Space Requested: 3629888812 (B), 3544813 (KB), 3461 (MB)
+	Eager Paging:
+		bzip2_base.amd6----------------------------#
 
-		Kernel Entry    : 263909     
-		Kernel Time     : 1637932575 
-		PGFLT Count     : 263409     
-		PGFLT Minor     : 263409     
-		PGFLT Major     : 0          
-		PGFLT Time      : 1634419901 
-		PGFLT Minor Time: 1634419901 
-		PGFLT Major Time: 0          
-		Mmap Count      : 112        
-		Mmap Time       : 1932531    
-		Mremap Count    : 388        
-		Memap Time      : 1580143    
-		Total Time      : 2033796075 
-		Order: O0 :264415, O1 :0, O2 :0, O3 :0, O4 :0, O5 :0, O6 :0, O7 :0, O8 :0, 
- 		O9 :104, 
-		Total Kernel Allocation: 1301147648 (B), 1270652 (KB), 1240 (MB) with PAGE_SIZE = 4096
-		User Space Requested: 1319088627 (B), 1288172 (KB), 1257 (MB)
+			 Kernel Entry    : 368        
+			 Kernel Time     : 1233931248 
+			 PGFLT Count     : 250        
+			 PGFLT Minor     : 250        
+			 PGFLT Major     : 0          
+			 PGFLT Time      : 7645446    
+			 PGFLT Minor Time: 7645446    
+			 PGFLT Major Time: 0          
+			 Mmap Count      : 118        
+			 Mmap Time       : 1226285802 
+			 Mremap Count    : 0          
+			 Memap Time      : 0          
+			 Total Time      : 1,234,483,248 
+			 Order: O0 :2162, O1 :30, O2 :35, O3 :45, O4 :7, O5 :51, O6 :50, O7 :42, O8 :48, 
+				 O9 :30, O10:20, O11:11, O12:15, O13:0, O14:3, O15:3, O16:9, 
+			 Total Kernel Allocation: 3614384128 (B), 3529672 (KB), 3446 (MB) with PAGE_SIZE = 4096
+			 User Space Requested: 3629888812 (B), 3544813 (KB), 3461 (MB)
 
-Eager Paging:
+========================================================================================
 
-perlbench_base.----------------------------#
- 
- 		Kernel Entry    : 4297       
- 		Kernel Time     : 207209671  
- 		PGFLT Count     : 3797       
- 		PGFLT Minor     : 3797       
- 		PGFLT Major     : 0          
- 		PGFLT Time      : 14357430   
- 		PGFLT Minor Time: 14357430   
- 		PGFLT Major Time: 0          
- 		Mmap Count      : 112        
- 		Mmap Time       : 191058451  
- 		Mremap Count    : 388        
- 		Memap Time      : 1793790    
- 		Total Time      : 213655171  
- 		Order: O0 :11133, O1 :741, O2 :500, O3 :243, O4 :187, O5 :6627, O6 :1161, O7 :6, O8 :58, 
-		Total Kernel Allocation: 1317007360 (B), 1286140 (KB), 1255 (MB) with PAGE_SIZE = 4096
-		User Space Requested: 1319088627 (B), 1288172 (KB), 1257 (MB)
+	Demand Paging:
+
+	perlbench_base.----------------------------#
+
+			Kernel Entry    : 263909     
+			Kernel Time     : 1637932575 
+			PGFLT Count     : 263409     
+			PGFLT Minor     : 263409     
+			PGFLT Major     : 0          
+			PGFLT Time      : 1634419901 
+			PGFLT Minor Time: 1634419901 
+			PGFLT Major Time: 0          
+			Mmap Count      : 112        
+			Mmap Time       : 1932531    
+			Mremap Count    : 388        
+			Memap Time      : 1580143    
+			Total Time      : 2033796075 
+			Order: O0 :264415, O1 :0, O2 :0, O3 :0, O4 :0, O5 :0, O6 :0, O7 :0, O8 :0, 
+	 		O9 :104, 
+			Total Kernel Allocation: 1301147648 (B), 1270652 (KB), 1240 (MB) with PAGE_SIZE = 4096
+			User Space Requested: 1319088627 (B), 1288172 (KB), 1257 (MB)
+
+	Eager Paging:
+
+	perlbench_base.----------------------------#
+	 
+	 		Kernel Entry    : 4297       
+	 		Kernel Time     : 207209671  
+	 		PGFLT Count     : 3797       
+	 		PGFLT Minor     : 3797       
+	 		PGFLT Major     : 0          
+	 		PGFLT Time      : 14357430   
+	 		PGFLT Minor Time: 14357430   
+	 		PGFLT Major Time: 0          
+	 		Mmap Count      : 112        
+	 		Mmap Time       : 191058451  
+	 		Mremap Count    : 388        
+	 		Memap Time      : 1793790    
+	 		Total Time      : 213655171  
+	 		Order: O0 :11133, O1 :741, O2 :500, O3 :243, O4 :187, O5 :6627, O6 :1161, O7 :6, O8 :58, 
+			Total Kernel Allocation: 1317007360 (B), 1286140 (KB), 1255 (MB) with PAGE_SIZE = 4096
+			User Space Requested: 1319088627 (B), 1288172 (KB), 1257 (MB)
 
 =====================================================================================
 
